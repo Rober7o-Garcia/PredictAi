@@ -1,0 +1,65 @@
+# ========================
+# Python
+# ========================
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+.env/
+.env.*
+
+# ========================
+# Django
+# ========================
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Media & static (si los generas)
+media/
+staticfiles/
+
+# Django migrations (opcional: comenta si quieres versionarlas)
+# */migrations/*
+# !*/migrations/__init__.py
+
+# ========================
+# IDEs / Editors
+# ========================
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ========================
+# OS files
+# ========================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ========================
+# Node / Frontend (por si usas Tailwind, Vite, etc.)
+# ========================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ========================
+# Build / Dist
+# ========================
+build/
+dist/
+*.egg-info/
+
+# ========================
+# Secrets
+# ========================
+.env
+.env.local
+.env.production
+.env.development
