@@ -1,0 +1,43 @@
+{% extends "base/base_auth.html" %}
+{% load static %}
+
+{% block pag_descrip %} Login {% endblock pag_descrip %}
+{% block title_pag %} Login | BlogGate 💻 {% endblock title_pag %}
+{% block favicon %}
+    https://th.bing.com/th/id/R.a9b7e00dfdfb1e4453332194aaf55419?rik=fzfT8puCgr7EFg&pid=ImgRaw&r=0
+{% endblock favicon %}
+
+{% block title_auth %} Login {% endblock title_auth %}
+{% block inputs %}
+    {% if form.non_field_errors %}
+        <ul class="text-red-600 text-sm">
+            {% for error in form.non_field_errors %}
+                <li class="text-center">{{ error }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    
+    <div class="flexbox1 gap-5">
+        {% for field in form %}
+            <div class="flex flex-col items-start gap-1">
+                {% if field.errors %}
+                    <ul class="text-red-600 text-sm">
+                        {% for error in field.errors %}
+                            <li class="text-center">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                {{ field }}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock inputs %}
+{% block btn_auth %}
+    <button type="submit" class="mx-auto btn-primary w-80 max-md:w-[60vw]">Iniciar sesión</button>
+{% endblock btn_auth %}
+
+{% block text_alt %}
+    ¿No tienes una cuenta? <a href="{% url "custom_auth:signup"  %}" class="text-blue-800 font-semibold tracking-wider transition-colors  hover:text-blue-900">Registrarse</a>
+    <br>
+    <span>¿Olvidaste tu contraseña: <a href="#" class="text-blue-800 font-semibold tracking-wider transition-colors  hover:text-blue-900">Reestablecer contraseña</a></span>
+{% endblock text_alt %}

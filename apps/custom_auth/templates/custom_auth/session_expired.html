@@ -1,0 +1,18 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block pag_descrip %} Session xpired {% endblock pag_descrip %}
+{% block title_pag %} Session expired | BlogGate 💻 {% endblock title_pag %}
+{% block favicon %}
+    https://cdn-icons-png.freepik.com/256/6227/6227474.png
+{% endblock favicon %}
+
+{% block content %}
+    <body class="background-auth min-h-screen flex justify-center items-center">
+        <section class="bg-white rounded-lg w-115 max-md:w-3/4_w h-auto px-5 py-6 flex flex-col justify-center items-center gap-5">
+            <h2>Sesión expirada</h2>
+            <p>Tu sesión ha caducado, por favor vuelve a iniciar sesión</p>
+            <a class="btn-primary" href="{% static "custom_auth:login" %}">Login</a>
+        </section>
+    </body>
+{% endblock content %}

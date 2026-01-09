@@ -1,0 +1,45 @@
+{% load static %}
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <link rel="stylesheet" href="{% static "css/output.css" %}">
+        <title>{% block title_pag %}{% endblock title_pag %}</title>
+        {% block css_styles %}{% endblock css_styles %}
+
+        <!-------------------------------------------------------------------------------------------->
+
+        <!------ Fuentes ------>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        
+        <!----- Tiny5 ------>
+        <link href="https://fonts.googleapis.com/css2?family=Tiny5&display=swap" rel="stylesheet">
+
+        <link href="https://fonts.googleapis.com/css2?family=Playpen+Sans:wght@100..800&display=swap" rel="stylesheet">
+
+        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+        <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap" rel="stylesheet">
+
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+
+        <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+
+        <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+        <!-------------------------------------------------------------------------------------------->
+
+        <!------ Librerías -------->
+        <!------- Alpine JS -------->
+        <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js" defer></script>
+
+        <!------ Fontshare: Clash Display ------>
+        <link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,400,700,500,600,300&amp;display=swap" rel="stylesheet"/>
+    </head>
+
+    {% block content %}
+        {% block js_scripts %}{% endblock js_scripts %}
+    {% endblock content %}
+</html>

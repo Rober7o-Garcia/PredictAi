@@ -1,0 +1,22 @@
+{% extends "base/base_auth.html" %}
+{% load static %}
+
+{% block pag_descrip %} Signup success {% endblock pag_descrip %}
+{% block title_pag %} Signup Success ✅ | BlogGate 💻 {% endblock title_pag %}
+{% block favicon %}
+    https://www.pngall.com/wp-content/uploads/2016/07/Success-PNG-Image.png
+{% endblock favicon %}
+
+{% block content %}
+    <body class="min-h-screen flex justify-center items-center" style="
+    background-image: linear-gradient(to right, #0000008c 0%, #0000008c 100%), url('https://img.freepik.com/foto-gratis/mano-humana-escribiendo-teclado-computadora-noche-generada-ai_188544-31050.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    ">
+        <section class="bg-white rounded-lg w-115 max-md:w-3/4_w h-auto px-5 py-6 flexbox1 gap-5">
+            <h2 class="font-bold tracking-widest font-ubuntu text-xl">Registro exitoso!</h2>
+            <p>Ya puedes iniciar sesión</p>
+            <a class="btn-primary" href="{% url "custom_auth:login" %}">Login</a>
+        </section>
+    </body>
+{% endblock content %} 

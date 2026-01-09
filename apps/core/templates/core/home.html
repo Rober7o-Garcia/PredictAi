@@ -1,0 +1,666 @@
+{% extends "base/base.html" %} 
+{% load static %} 
+{% block pag_title %}Página principal | EconoSim 💻{% endblock pag_title %} 
+
+{% block css_styles %}
+    <link rel="stylesheet" href="{% static 'core/css/home.css' %}">
+{% endblock css_styles %}
+
+{% block content %}
+    <body class="antialiased bg-body text-body font-body">
+        <div>
+            <section class="relative pb-24 bg-body overflow-hidden" x-data="{ mobileNavOpen: false }">
+                <nav class="relative z-10 py-7">
+                    <div class="container mx-auto px-4">
+                        <div class="relative flex items-center justify-between">
+                            <a class="inline-block" href="#">
+                                <img class="h-10" src="{% static "core/home/logo.svg" %}" alt=""/>
+                            </a>
+
+                            <div class="flex items-center justify-end">
+                                <div class="hidden lg:block mr-10">
+                                    <a class="inline-flex py-2 px-4 mr-4 items-center justify-center text-sm font-medium uppercase text-white hover:text-violet-500" href="{% url "custom_auth:login" %}">SIGN IN</a>
+
+                                    <a class="inline-flex h-11 py-2 px-4 items-center justify-center text-sm font-medium uppercase text-black hover:text-white bg-violet-500 hover:bg-violet-600 transition duration-200 rounded-full" href="{% url "custom_auth:signup" %}">SIGN UP</a>
+                                </div>
+
+                                <button class="text-white hover:text-violet-500" x-on:click="mobileNavOpen = !mobileNavOpen">
+                                    <svg width="32" height="32" viewbox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M3 16H29" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+
+                                        <path d="M3 8H29" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+
+                                        <path d="M20 24L29 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+
+                <img class="absolute top-0 right-0 opacity-80" src="{% static "core/home/circle-double-element-dark.svg" %}" alt="" />
+                
+                <div class="relative pt-24">
+                    <div class="relative z-10 container mx-auto px-4">
+                        <div class="max-w-lg mx-auto lg:max-w-none">
+                            <h1 class="font-heading text-5xl sm:text-6xl md:text-7xl xl:text-8xl text-white font-semibold leading-none mb-8">
+                                <span>AI TO</span>
+                                
+                                <span class="inline-block bg-clip-text text-transparent bg-gradient-to-br from-violet-900 via-blueGray-900 to-sky-900">MANAGE</span>
+
+                                <span class="block leading-none bg-clip-text text-transparent bg-gradient-to-br from-violet-900 via-blueGray-900 to-sky-900">FINANCE</span>
+                            </h1>
+
+                            <p class="text-2xl text-gray-400 mb-8">
+                                <span class="block">Welcome to EconoSimAI -</span>
+                                <span class="block">Your AI system to improve your finance</span>
+                            </p>
+                            
+                            <div class="mb-24 lg:mb-52">
+                                <a class="group inline-flex w-full md:w-auto h-14 mb-4 md:mr-3 px-7 items-center justify-center text-base font-medium text-black hover:text-white bg-violet-500 hover:bg-violet-600 transition duration-200 rounded-full" href="#">
+                                    <span class="mr-2">TRY IT FOR FREE</span>
+
+                                    <svg width="24" height="24" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M17.9199 6.62C17.8185 6.37565 17.6243 6.18147 17.3799 6.08C17.2597 6.02876 17.1306 6.00158 16.9999 6H6.99994C6.73472 6 6.48037 6.10536 6.29283 6.29289C6.1053 6.48043 5.99994 6.73478 5.99994 7C5.99994 7.26522 6.1053 7.51957 6.29283 7.70711C6.48037 7.89464 6.73472 8 6.99994 8H14.5899L6.28994 16.29C6.19621 16.383 6.12182 16.4936 6.07105 16.6154C6.02028 16.7373 5.99414 16.868 5.99414 17C5.99414 17.132 6.02028 17.2627 6.07105 17.3846C6.12182 17.5064 6.19621 17.617 6.28994 17.71C6.3829 17.8037 6.4935 17.8781 6.61536 17.9289C6.73722 17.9797 6.86793 18.0058 6.99994 18.0058C7.13195 18.0058 7.26266 17.9797 7.38452 17.9289C7.50638 17.8781 7.61698 17.8037 7.70994 17.71L15.9999 9.41V17C15.9999 17.2652 16.1053 17.5196 16.2928 17.7071C16.4804 17.8946 16.7347 18 16.9999 18C17.2652 18 17.5195 17.8946 17.707 17.7071C17.8946 17.5196 17.9999 17.2652 17.9999 17V7C17.9984 6.86932 17.9712 6.74022 17.9199 6.62Z"
+                                            fill="currentColor">
+                                        </path>
+                                    </svg>
+                                </a>
+
+                                <a class="group inline-flex w-full md:w-auto h-14 px-7 items-center justify-center text-base font-medium text-white hover:text-violet-500 bg-transparent hover:bg-white border-2 border-white transition duration-200 rounded-full" href="#">
+                                    <span class="mr-2">PURCHASE PRO</span>
+
+                                    <span class="animate-spinSlow group-hover:animate-none">
+                                        <svg width="24" height="24" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M11.9999 11C11.8021 11 11.6088 11.0586 11.4443 11.1685C11.2799 11.2784 11.1517 11.4346 11.076 11.6173C11.0003 11.8 10.9805 12.0011 11.0191 12.1951C11.0577 12.3891 11.153 12.5673 11.2928 12.7071C11.4327 12.847 11.6108 12.9422 11.8048 12.9808C11.9988 13.0194 12.1999 12.9996 12.3826 12.9239C12.5653 12.8482 12.7215 12.72 12.8314 12.5556C12.9413 12.3911 12.9999 12.1978 12.9999 12C12.9999 11.7348 12.8946 11.4804 12.707 11.2929C12.5195 11.1054 12.2651 11 11.9999 11ZM19.6199 12L19.7299 11.86C21.0799 10 21.3999 8.29 20.6599 7C19.9199 5.71 18.2599 5.14 15.9999 5.37H15.8199C14.9099 3.3 13.5599 2 11.9999 2C10.4399 2 9.08991 3.3 8.18991 5.4L7.99991 5.37C5.73991 5.14 4.07991 5.71 3.33991 7C2.59991 8.29 2.91991 10 4.26991 11.86L4.37991 12L4.26991 12.14C2.91991 14 2.59991 15.71 3.33991 17C3.99991 18.1 5.26991 18.68 6.99991 18.68C7.30991 18.68 7.62991 18.68 7.99991 18.63H8.17991C9.08991 20.7 10.4399 22 11.9999 22C13.5599 22 14.9099 20.7 15.8099 18.6H15.9899C16.3299 18.6 16.6499 18.65 16.9899 18.65C18.7599 18.65 20.0599 18.07 20.6899 16.97C21.4299 15.68 21.1099 13.97 19.7599 12.11L19.6199 12ZM5.06991 8C5.31991 7.56 6.06991 7.32 7.06991 7.32H7.55991C7.40321 7.93517 7.2863 8.5598 7.20991 9.19C6.70045 9.57537 6.21613 9.99288 5.75991 10.44C4.99991 9.44 4.77991 8.5 5.06991 8ZM5.06991 16C4.77991 15.5 5.06991 14.56 5.73991 13.53C6.19613 13.9771 6.68045 14.3946 7.18991 14.78C7.26631 15.4135 7.38322 16.0415 7.53991 16.66C6.29991 16.74 5.35991 16.5 5.06991 16ZM11.9999 4C12.5599 4 13.2299 4.66 13.7999 5.83C13.189 6.00731 12.5881 6.21762 11.9999 6.46C11.4117 6.21762 10.8109 6.00731 10.1999 5.83C10.7699 4.66 11.4399 4 11.9999 4ZM11.9999 20C11.4399 20 10.7699 19.34 10.1999 18.17C10.8109 17.9927 11.4117 17.7824 11.9999 17.54C12.5881 17.7824 13.189 17.9927 13.7999 18.17C13.2299 19.34 12.5599 20 11.9999 20ZM14.9299 13.69C14.4699 14.01 13.9999 14.31 13.4999 14.6C12.9999 14.89 12.4999 15.15 11.9999 15.38C11.4999 15.1467 10.9999 14.8867 10.4999 14.6C9.99991 14.31 9.49991 14.01 9.06991 13.69C8.99991 13.15 8.99991 12.59 8.99991 12C8.99991 11.41 8.99991 10.85 9.06991 10.31C9.52991 9.99 9.99991 9.69 10.4999 9.4C10.9999 9.11 11.4999 8.85 11.9999 8.62C12.4999 8.85333 12.9999 9.11333 13.4999 9.4C13.9999 9.69 14.4999 9.99 14.9299 10.31C14.9299 10.85 14.9999 11.41 14.9999 12C14.9999 12.59 14.9999 13.15 14.9299 13.69ZM18.9299 16C18.6399 16.5 17.6999 16.75 16.4599 16.66C16.6166 16.0415 16.7335 15.4135 16.8099 14.78C17.3194 14.3946 17.8037 13.9771 18.2599 13.53C18.9999 14.56 19.2199 15.5 18.9299 16ZM18.2599 10.47C17.8037 10.0229 17.3194 9.60537 16.8099 9.22C16.7335 8.5898 16.6166 7.96517 16.4599 7.35H16.9499C17.9499 7.35 18.6799 7.59 18.9499 8.03C19.2199 8.47 18.9999 9.44 18.2599 10.47Z"
+                                                fill="currentColor">
+                                            </path>
+                                        </svg>
+                                    </span>
+                                </a>
+                            </div>
+
+                            <div class="flex items-center">
+                                <div class="mr-3">
+                                    <img class="block w-10 h-10 animate-spinStar" src="{% static "core/home/blink-sm.png" %}" alt="" />
+                                </div>
+
+                                <div>
+                                    <p class="text-sm text-sky-800 leading-snug">
+                                        <span class="block">Micro Office For Startups -</span>
+                                        <span>Connection Club</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hidden lg:block absolute top-0 right-0 w-1/2 xl:w-full xl:h-170">
+                        <div class="absolute top-0 right-0 -mt-12 w-160 h-160 bg-gradient-to-t from-purple-700 to-darkBlue-900 rounded-full filter blur-4xl"></div>
+                        <img class="absolute top-0 right-0 mt-40" src="{% static "core/home/planet-lg.png" %}" alt="" />
+                        <img class="absolute top-0 right-0 mt-20 mr-16 h-160" src="{% static "core/home/robot-with-wrench.png" %}" alt="" />
+                    </div>
+
+                    <div class="relative block lg:hidden h-128 md:h-170">
+                        <div class="absolute top-0 right-0 w-160 h-160 bg-gradient-to-t from-purple-700 to-darkBlue-900 rounded-full filter blur-4xl"></div>
+                        <img class="absolute top-0 right-0 mt-40 h-96 md:h-auto" src="{% static "core/home/planet-lg.png" %}" alt="" />
+                        <img class="absolute top-0 right-0 mt-20 h-112 md:h-160" src="{% static "core/home/robot-with-wrench.png" %}" alt="" />
+                    </div>
+                </div>
+
+                <div class="hidden fixed top-0 left-0 bottom-0 w-5/6 max-w-md z-50" :class="{'block': mobileNavOpen, 'hidden': !mobileNavOpen}">
+                    <div class="fixed inset-0 bg-violet-900 opacity-20" x-on:click="mobileNavOpen = !mobileNavOpen"></div>
+
+                    <nav class="relative flex flex-col py-7 px-10 w-full h-full bg-white overflow-y-auto">
+                        <div class="flex mb-auto items-center">
+                            <a class="inline-block mr-auto" href="">
+                                <img class="h-10" src="{% static "core/home/casper-logo.svg" %}" alt="" />
+                            </a>
+
+                            <button x-on:click="mobileNavOpen = !mobileNavOpen">
+                                <svg width="24" height="24" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M6 18L18 6M6 6L18 18" stroke="#111827" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                </svg>
+                            </button>
+                        </div>
+
+                        <div class="py-12 mb-auto">
+                            <ul class="flex-col">
+                                <li class="mb-6">
+                                    <a class="inline-block text-base text-black font-medium uppercase" href="">ABOUT</a>
+                                </li>
+
+                                <li class="mb-6">
+                                    <a class="inline-block text-base text-black font-medium uppercase" href="">PRICING</a>
+                                </li>
+
+                                <li class="mb-6">
+                                    <a class="inline-block text-base text-black font-medium uppercase" href="">BLOG</a>
+                                </li>
+
+                                <li>
+                                    <a class="inline-block text-base text-black font-medium uppercase" href="">CONTACT</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <a class="flex py-2 px-4 mb-4 items-center justify-center text-sm font-medium uppercase text-violet-900 hover:text-violet-500" href="">SIGN IN</a>
+                            <a class="flex h-11 py-2 px-4 items-center justify-center text-sm font-medium uppercase text-black hover:text-white bg-violet-500 hover:bg-violet-600 transition duration-200 rounded-full" href="#">SIGN UP</a>
+                        </div>
+                    </nav>
+                </div>
+            </section>
+
+            <section
+                class="relative py-12 md:py-24 lg:py-32 bg-body overflow-hidden">
+                <div class="relative container mx-auto px-4">
+                    <div class="absolute top-0 right-0 w-186 h-186 bg-gradient-to-t from-violet-900 to-darkBlue-900 rounded-full filter blur-4xl"></div>
+
+                    <div class="relative max-w-md md:max-w-8xl mx-auto">
+                        <div class="text-center mb-20 md:mb-40">
+                            <h2 class="font-heading text-4xl xs:text-5xl sm:text-6xl md:text-7xl font-medium text-white tracking-tight mb-6">How Does It Work</h2>
+                            <p class="text-xl text-gray-400">Mi turpis turpis in justo pellentesque id nibh praesent.</p>
+                        </div>
+
+                        <div class="flex flex-wrap -mx-4 -mb-24">
+                            <div class="w-full md:w-1/2 px-4 mb-24">
+                                <div class="max-w-md xl:max-w-lg">
+                                    <div class="mb-8">
+                                        <h3 class="font-heading text-4xl xl:text-5xl font-semibold text-white">01. Inicio de la empresa</h3>
+                                        <div class="my-6 h-1 w-full bg-white bg-opacity-20"></div>
+                                        <p class="text-xl text-gray-100 tracking-tight">El usuario crea o inicia una empresa dentro del sistema, definiendo capital inicial, salarios, impuestos, entre otros parámetros</p>
+                                    </div>
+
+                                    <div class="relative flex pt-12 lg:pt-20 pl-12 lg:pl-20 items-end justify-end rounded-3xl overflow-hidden">
+                                        <img class="absolute top-0 left-0 w-full h-full" src="{% static "core/home/bg-square-gradient.png" %}" alt="" />
+                                        <img class="relative rounded-tl-3xl object-cover" src="{% static "core/home/paso-1.png" %}" alt=""/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="w-full md:w-1/2 px-4 mb-24">
+                                <div class="max-w-md xl:max-w-lg md:ml-auto">
+                                    <div class="mb-8">
+                                        <h3 class="font-heading text-4xl xl:text-5xl font-semibold text-white">02. Toma de decisiones</h3>
+                                        <div class="my-6 h-1 w-full bg-white bg-opacity-20"></div>
+                                        <p class="text-xl text-gray-100 tracking-tight">En cada ronda, el usuario decide: precio del producto, cantidad a producir y ajustes de salarios (si se aplica)</p>
+                                    </div>
+
+                                    <div class="relative flex pt-12 lg:pt-20 pl-12 lg:pl-20 items-end justify-end rounded-3xl overflow-hidden">
+                                        <img class="absolute top-0 left-0 w-full h-full" src="{% static "core/home/bg-square-gradient.png" %}" alt=""/>
+                                        <img class="relative rounded-tl-3xl object-cover" src="{% static "core/home/image-square-sm-3.png" %}" alt=""/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="w-full md:w-1/2 px-4 mb-24">
+                                <div class="max-w-md xl:max-w-lg">
+                                    <div class="mb-8">
+                                        <h3 class="font-heading text-4xl xl:text-5xl font-semibold text-white">03. Simulación + Predicción IA</h3>
+                                        <div class="my-6 h-1 w-full bg-white bg-opacity-20"></div>
+                                        <p class="text-xl text-gray-100 tracking-tight">El modelo de IA predice la demanda del mercado, mientras que el motor de simuación calcula ingresos, costos totales, impuestos y ganancia / pérdida, para que se evalúe si la empresa entra en riesgo de quiebra.</p>
+                                    </div>
+
+                                    <div class="relative flex pt-12 lg:pt-20 pl-12 lg:pl-20 items-end justify-end rounded-3xl overflow-hidden">
+                                        <img class="absolute top-0 left-0 w-full h-full" src="{% static "core/home/bg-square-gradient.png" %}" alt=""/>
+                                        <img class="relative rounded-tl-3xl object-cover" src="{% static "core/home/paso-3.png" %}" alt=""/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="w-full md:w-1/2 px-4 mb-24">
+                                <div class="max-w-md xl:max-w-lg md:ml-auto">
+                                    <div class="mb-8">
+                                        <h3 class="font-heading text-4xl xl:text-5xl font-semibold text-white">04. Resultados y retroalimentación</h3>
+                                        <div class="my-6 h-1 w-full bg-white bg-opacity-20"></div>
+                                        <p class="text-xl text-gray-100 tracking-tight">El sistema le muestra al usuario los datos procesados: ganancias / pérdidas, nivel de demanda, estado de la empresa. Finalmente, se realiza un feedback y el usuario podrá guardar el progreso en un PDF</p>
+                                    </div>
+
+                                    <div class="relative flex pt-12 lg:pt-20 pl-12 lg:pl-20 items-end justify-end rounded-3xl overflow-hidden">
+                                        <img class="absolute top-0 left-0 w-full h-full" src="{% static "core/home/bg-square-gradient.png" %}" alt="" /><img class="relative rounded-tl-3xl object-cover" src="{% static "core/home/paso-4.png" %}" alt=""/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="relative py-12 md:py-24 bg-body overflow-hidden">
+                <img class="absolute bottom-0 right-0" src="{% static "core/home/double-line-circle.svg" %}" alt=""/>
+                <img class="hidden md:block z-10 absolute top-0 left-0 mt-24 ml-4 lg:ml-24 xl:ml-64 animate-spinStar" src="{% static "core/home/blink-star.png" %}" alt=""/>
+
+                <div class="relative container mx-auto px-4">
+                    <div class="absolute bottom-0 left-0 -mb-20 w-160 h-160 bg-gradient-to-t from-purple-700 to-darkBlue-900 rounded-full filter blur-4xl"></div>
+                    
+                    <div class="absolute bottom-0 right-0 -mb-20 w-148 h-148 bg-gradient-to-t from-violet-900 to-darkBlue-900 rounded-full filter blur-4xl"></div>
+
+                    <div class="relative">
+                        <div class="max-w-xl mx-auto mb-16 text-center">
+                            <h2 class="font-heading text-4xl xs:text-5xl sm:text-6xl md:text-7xl font-medium text-white tracking-tight mb-6">Características principales</h2>
+                            <p class="text-xl text-gray-400">Our AI is powered by state-of-the-art artificial intelligence and ensuring natural and meaningful interactions</p>
+                        </div>
+
+                        <div class="flex flex-wrap -mx-4">
+                            <div class="w-full lg:w-1/3 px-4 mb-8 lg:mb-0">
+                                <div class="max-w-md mx-auto h-full p-8 rounded-3xl shadow-box-violet overflow-hidden bg-white bg-opacity-10">
+                                    <div class="flex mb-12 items-center">
+                                        <div class="flex-shrink-0 flex mr-4 items-center justify-center w-16 h-16 rounded-full bg-green-500">
+                                            <svg width="24" height="24" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M11.6799 16.9298L15.7499 20.9998L17.5399 19.2098C17.6441 19.106 17.7241 18.9805 17.7743 18.8422C17.8244 18.7039 17.8434 18.5563 17.8299 18.4098L17.1799 11.2998"
+                                                    stroke="white"
+                                                    stroke-width="2"
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                </path>
+
+                                                <path
+                                                    d="M9.36994 4.71L7.99994 6.13M9.36994 17.46C9.4629 17.5537 9.5735 17.6281 9.69536 17.6789C9.81722 17.7297 9.94793 17.7558 10.0799 17.7558C10.212 17.7558 10.3427 17.7297 10.4645 17.6789C10.5864 17.6281 10.697 17.5537 10.7899 17.46L18.6999 9.55C20.1713 8.07754 20.9984 6.08157 20.9999 4C20.9999 3.73478 20.8946 3.48043 20.707 3.29289C20.5195 3.10536 20.2652 3 19.9999 3C17.9184 3.00151 15.9224 3.82867 14.4499 5.3L6.53994 13.21C6.44621 13.303 6.37182 13.4136 6.32105 13.5354C6.27028 13.6573 6.24414 13.788 6.24414 13.92C6.24414 14.052 6.27028 14.1827 6.32105 14.3046C6.37182 14.4264 6.44621 14.537 6.53994 14.63L9.36994 17.46ZM17.8699 16L19.2899 14.59L17.8699 16Z"
+                                                    stroke="white"
+                                                    stroke-width="2"
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                </path>
+
+                                                <path
+                                                    d="M12.75 6.82022L5.59 6.17022C5.44353 6.15675 5.2959 6.17575 5.15761 6.22588C5.01933 6.27601 4.89381 6.35602 4.79 6.46022L3 8.25022L7.09 12.3402"
+                                                    stroke="white"
+                                                    stroke-width="2"
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                </path>
+                                            </svg>
+                                        </div>
+
+                                        <div>
+                                            <h4 class="text-2xl font-medium text-white leading-tight">
+                                                <span class="block">Preciso</span>
+                                            </h4>
+                                        </div>
+                                    </div>
+
+                                    <p class="text-xl text-gray-400">El simulador calcula resultados económicos usando reglas claras y valores exactos.</p>
+                                </div>
+                            </div>
+
+                            <div class="w-full lg:w-1/3 px-4 mb-8 lg:mb-0">
+                                <div class="max-w-md mx-auto h-full p-8 rounded-3xl shadow-box-orange overflow-hidden bg-white bg-opacity-10">
+                                    <div class="flex mb-12 items-center">
+                                        <div class="flex-shrink-0 flex mr-4 items-center justify-center w-16 h-16 rounded-full bg-yellow-700">
+                                            <svg width="24" height="24" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M3 3V2C2.44772 2 2 2.44772 2 3H3ZM18.293 14.293L17.3818 13.8809C17.2104 14.2601 17.2916 14.7058 17.5859 15.0001L18.293 14.293ZM21 17L21.7071 17.7071C22.0976 17.3166 22.0976 16.6834 21.7071 16.2929L21 17ZM17 21L16.2929 21.7071C16.6834 22.0976 17.3166 22.0976 17.7071 21.7071L17 21ZM14.293 18.293L15.0001 17.5859C14.7058 17.2916 14.2601 17.2104 13.8809 17.3818L14.293 18.293ZM11 2H3V4H11V2ZM20 11C20 6.02944 15.9706 2 11 2V4C14.866 4 18 7.13401 18 11H20ZM19.2041 14.7051C19.7157 13.5738 20 12.3188 20 11H18C18 12.029 17.7786 13.0036 17.3818 13.8809L19.2041 14.7051ZM17.5859 15.0001L20.2929 17.7071L21.7071 16.2929L19.0001 13.5859L17.5859 15.0001ZM20.2929 16.2929L16.2929 20.2929L17.7071 21.7071L21.7071 17.7071L20.2929 16.2929ZM17.7071 20.2929L15.0001 17.5859L13.5859 19.0001L16.2929 21.7071L17.7071 20.2929ZM11 20C12.3188 20 13.5738 19.7157 14.7051 19.2041L13.8809 17.3818C13.0036 17.7786 12.029 18 11 18V20ZM2 11C2 15.9706 6.02944 20 11 20V18C7.13401 18 4 14.866 4 11H2ZM2 3V11H4V3H2Z"
+                                                    fill="white">
+                                                </path>
+
+                                                <ellipse  cx="11" cy="11" rx="2" ry="2" transform="rotate(-180 11 11)" fill="white"></ellipse>
+
+                                                <path d="M3 3L11 11" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                            </svg>
+                                        </div>
+
+                                        <div>
+                                            <h4 class="text-2xl font-medium text-white leading-tight">
+                                                <span class="block">Optimizado</span>
+                                            </h4>
+                                        </div>
+                                    </div>
+
+                                    <p class="text-xl text-gray-400">El sistema usa cálculos simples y eficientes para simular decisiones sin sobrecargar recursos.</p>
+                                </div>
+                            </div>
+
+                            <div class="w-full lg:w-1/3 px-4">
+                                <div class="max-w-md mx-auto h-full p-8 rounded-3xl shadow-box-green overflow-hidden bg-white bg-opacity-10">
+                                    <div class="flex mb-12 items-center">
+                                        <div class="flex-shrink-0 flex mr-4 items-center justify-center w-16 h-16 rounded-full bg-sky-500">
+                                            <svg width="24" height="24" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M6 9C6 5.68629 8.68629 3 12 3V3C15.3137 3 18 5.68629 18 9V15C18 18.3137 15.3137 21 12 21V21C8.68629 21 6 18.3137 6 15V9Z"
+                                                    stroke="white"
+                                                    stroke-width="2"
+                                                    stroke-linejoin="round">
+                                                </path>
+
+                                                <path d="M12 7L12 11" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                            </svg>
+                                        </div>
+
+                                        <div>
+                                            <h4 class="text-2xl font-medium text-white leading-tight">
+                                                <span class="block">Funcional</span>
+                                            </h4>
+                                        </div>
+                                    </div>
+
+                                    <p class="text-xl text-gray-400">El juego permite tomar decisiones clave y muestra consecuencias reales de forma directa.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="relative py-12 md:py-24 lg:py-32 bg-body overflow-hidden" x-data="{ category: 'all' }">
+                <div class="relative container mx-auto px-4">
+                    <img class="hidden md:block absolute top-0 left-0 -mt-10 animate-spinStar z-10" src="{% static "core/home/blink-star.png"%}" alt=""/>
+                    <div class="absolute top-0 left-0 mt-96 -ml-52 w-186 h-186 bg-gradient-to-t from-violet-700 via-darkBlue-900 to-transparent rounded-full filter blur-4xl"></div>
+                    <div class="absolute top-0 right-0 w-186 h-186 mt-10 -mr-64 bg-gradient-to-t from-purple-600 via-darkBlue-900 to-transparent rounded-full filter blur-4xl"></div>
+                    
+                    <div class="relative text-center mb-16">
+                        <h2 class="font-heading text-4xl xs:text-5xl sm:text-6xl md:text-7xl font-medium text-white tracking-tight mb-8">Projects Launched</h2>
+                        <p class="max-w-xl mx-auto text-xl text-gray-500 leading-relaxed tracking-tight mb-12">ContrastAI is powered by state-of-the-art artificial intelligence and ensuring natural and meaningful interactions</p>
+                        <div class="inline-block max-w-max mx-auto p-2 md:p-1.5 bg-white bg-opacity-10 rounded-3xl md:rounded-full">
+                            <div class="flex flex-col md:flex-row flex-nowrap items-center">
+                                <a class="group inline-flex w-full sm:w-auto py-4 px-5 mb-2 md:mb-0 md:mr-2 items-center justify-center text-base font-medium text-white hover:text-black hover:bg-violet-500 transition duration-150 rounded-full" x-on:click.prevent="category = 'all'" href="#">All Categories</a>
+
+                                <a class="group inline-flex w-full sm:w-auto py-4 px-5 mb-2 md:mb-0 md:mr-2 items-center justify-center text-base font-medium text-white hover:text-black hover:bg-violet-500 transition duration-150 rounded-full" x-on:click.prevent="category = 'branding'" href="#">Branding</a>
+                                
+                                <a class="group inline-flex w-full sm:w-auto py-4 px-5 mb-2 md:mb-0 md:mr-2 items-center justify-center text-base font-medium text-white hover:text-black hover:bg-violet-500 transition duration-150 rounded-full" x-on:click.prevent="category = 'ui-design'" href="#">UI Design</a>
+
+                                <a class="group inline-flex w-full sm:w-auto py-4 px-5 mb-2 md:mb-0 md:mr-2 items-center justify-center text-base font-medium text-white hover:text-black hover:bg-violet-500 transition duration-150 rounded-full" x-on:click.prevent="category = 'illustration'" href="#">Illustration</a>
+
+                                <a class="group inline-flex w-full sm:w-auto py-4 px-5 items-center justify-center text-base font-medium text-white hover:text-black hover:bg-violet-500 transition duration-150 rounded-full" x-on:click.prevent="category = 'development'" href="#">Development</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="relative flex flex-wrap -mx-4" x-show="category === 'all'">
+                        <div class="w-full lg:w-1/3 px-4 mb-8 lg:mb-0">
+                            <div class="relative flex items-end h-128 p-6 mb-8 rounded-3xl overflow-hidden">
+                                <img class="absolute top-0 left-0 w-full h-full object-cover" src="{% static "core/home/projects-box-vertical-1.png" %}" alt=""/>
+                                <a class="relative group block w-full p-6 rounded-3xl overflow-hidden" href="#">
+                                    <img class="absolute top-0 left-0 w-full h-full" src="{% static "core/home/bg-square-gradient.png" %}" alt=""/>
+                                    
+                                    <div class="relative">
+                                        <div class="flex mb-20 items-center justify-between">
+                                            <img src="{% static "core/home/logo-icon.svg" %}" alt=""/>
+                                            <span class="text-black group-hover:text-white transform group-hover:translate-x-1 group-hover:-translate-y-1 transition duration-100">
+                                                <svg width="33" height="32" viewbox="0 0 33 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M24.3934 8.82667C24.2581 8.50087 23.9992 8.24197 23.6734 8.10667C23.5131 8.03835 23.3409 8.00211 23.1667 8H9.83337C9.47975 8 9.14061 8.14048 8.89057 8.39052C8.64052 8.64057 8.50004 8.97971 8.50004 9.33333C8.50004 9.68696 8.64052 10.0261 8.89057 10.2761C9.14061 10.5262 9.47975 10.6667 9.83337 10.6667H19.9534L8.88671 21.72C8.76174 21.844 8.66254 21.9914 8.59485 22.1539C8.52716 22.3164 8.49231 22.4907 8.49231 22.6667C8.49231 22.8427 8.52716 23.017 8.59485 23.1794C8.66254 23.3419 8.76174 23.4894 8.88671 23.6133C9.01066 23.7383 9.15813 23.8375 9.3206 23.9052C9.48308 23.9729 9.65736 24.0077 9.83337 24.0077C10.0094 24.0077 10.1837 23.9729 10.3461 23.9052C10.5086 23.8375 10.6561 23.7383 10.78 23.6133L21.8334 12.5467V22.6667C21.8334 23.0203 21.9738 23.3594 22.2239 23.6095C22.4739 23.8595 22.8131 24 23.1667 24C23.5203 24 23.8595 23.8595 24.1095 23.6095C24.3596 23.3594 24.5 23.0203 24.5 22.6667V9.33333C24.4979 9.1591 24.4617 8.98696 24.3934 8.82667Z"
+                                                        fill="currentColor">
+                                                    </path>
+                                                </svg>
+                                            </span>
+                                        </div>
+
+                                        <div class="max-w-xs pr-12">
+                                            <h4 class="text-3xl font-medium mb-3">Jiggle Branding</h4>
+                                            <p class="text-sm"> Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt.</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <img class="block w-full rounded-3xl h-80" src="{% static "core/home/projects-box-3.png" %}" alt=""/>
+                        </div>
+                        
+                        <div class="w-full lg:w-1/3 px-4 mb-8 lg:mb-0">
+                            <img class="block w-full mb-8 rounded-3xl h-80 object-cover" src="{% static "core/home/projects-box-1.png" %}" alt=""/>
+                            <img class="block w-full rounded-3xl h-128 object-cover" src="{% static "core/home/projects-box-vertical-3.png" %}" alt=""/>
+                        </div>
+
+                        <div class="w-full lg:w-1/3 px-4">
+                            <img class="block w-full mb-8 rounded-3xl h-128 object-cover" src="{% static "core/home/projects-box-vertical-2.png" %}" alt=""/>
+                            <img class="block w-full rounded-3xl h-80 object-cover" src="{% static "core/home/projects-box-2.png" %}" alt=""/>
+                        </div>
+                    </div>
+
+                    <div class="visibility-item relative flex flex-wrap -mx-4" x-show="category === 'branding'">
+                        <div class="w-full lg:w-1/3 px-4 mb-8 lg:mb-0">
+                            <img class="block w-full mb-8 rounded-3xl h-80 object-cover" src="{% static "core/home/projects-box-1.png" %}" alt="" />
+                            <img class="block w-full rounded-3xl h-128 object-cover" src="{% static "core/home/projects-box-vertical-3.png" %}" alt="" />
+                        </div>
+                        
+                        <div class="w-full lg:w-1/3 px-4">
+                            <img class="block w-full mb-8 rounded-3xl h-128 object-cover" src="{% static "core/home/projects-box-vertical-2.png" %}" alt=""/>
+                            <img class="block w-full rounded-3xl h-80 object-cover" src="{% static "core/home/projects-box-2.png" %}" alt=""/>
+                        </div>
+                    </div>
+
+                    <div class="visibility-item relative flex flex-wrap -mx-4" x-show="category === 'ui-design'">
+                        <div class="w-full lg:w-1/3 px-4 mb-8 lg:mb-0">
+                            <img class="block w-full mb-8 rounded-3xl h-80 object-cover" src="{% static "core/home/projects-box-1.png" %}" alt=""/>
+                            <img class="block w-full rounded-3xl h-128 object-cover" src="{% static "core/home/projects-box-vertical-3.png" %}" alt=""/>
+                        </div>
+
+                        <div class="w-full lg:w-1/3 px-4">
+                            <img class="block w-full mb-8 rounded-3xl h-128 object-cover" src="{% static "core/home/projects-box-vertical-2.png" %}" alt=""/>
+                        </div>
+                    </div>
+
+                    <div class="visibility-item relative flex flex-wrap -mx-4" x-show="category === 'illustration'">
+                        <div class="w-full lg:w-1/3 px-4 mb-8 lg:mb-0">
+                            <img class="block w-full mb-8 rounded-3xl h-80 object-cover" src="{% static "core/home/projects-box-1.png" %}" alt=""/>
+                            <img class="block w-full rounded-3xl h-128 object-cover" src="{% static "core/home/projects-box-vertical-3.png" %}" alt=""/>
+                        </div>
+                    </div>
+
+                    <div class="visibility-item relative flex flex-wrap -mx-4" x-show="category === 'development'">
+                        <div class="w-full lg:w-1/3 px-4 mb-8 lg:mb-0">
+                            <img class="block w-full mb-8 rounded-3xl h-80 object-cover" src="{% static "core/home/projects-box-1.png" %}" alt=""/>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="relative py-12 md:py-24 lg:py-32 bg-body overflow-hidden">
+                <div class="relative container mx-auto px-4">
+                    <img class="hidden md:block absolute top-0 right-0 lg:left-1/2 -ml-20 xl:-ml-32 -mt-24 z-10 animate-spinStar" src="{% static "core/home/blink-star.png" %}" alt=""/>
+                    
+                    <div class="absolute top-0 right-0 -mt-72 -mr-40 w-128 h-128 bg-gradient-to-t from-blue-500 to-darkBlue-900 rounded-full filter blur-4xl"></div>
+
+                    <div class="relative max-w-xl mx-auto lg:max-w-none">
+                        <div class="flex flex-wrap -mx-4">
+                            <div class="w-full lg:w-1/2 px-4 mb-16 lg:mb-0">
+                                <div class="max-w-xl mx-auto lg:mx-0">
+                                    <h2 class="font-heading text-4xl xs:text-5xl sm:text-6xl font-medium text-white tracking-tight mb-8">Integrate your UI Libray with ours</h2>
+                                    <p class="max-w-md text-lg text-gray-500 tracking-tight mb-8">Nunc et tellus non erat accumsan aliquam eget non mi. Integer fringilla pellentesque finibus.</p>
+                                    <a class="group inline-flex w-full sm:w-auto h-14 px-7 items-center justify-center text-base font-medium text-black hover:text-violet-800 bg-violet-500 hover:bg-white transition duration-200 rounded-full" href="#">
+                                        <span class="mr-2">LEARN MORE</span>
+
+                                        <svg width="24" height="24" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M17.9199 6.62C17.8185 6.37565 17.6243 6.18147 17.3799 6.08C17.2597 6.02876 17.1306 6.00158 16.9999 6H6.99994C6.73472 6 6.48037 6.10536 6.29283 6.29289C6.1053 6.48043 5.99994 6.73478 5.99994 7C5.99994 7.26522 6.1053 7.51957 6.29283 7.70711C6.48037 7.89464 6.73472 8 6.99994 8H14.5899L6.28994 16.29C6.19621 16.383 6.12182 16.4936 6.07105 16.6154C6.02028 16.7373 5.99414 16.868 5.99414 17C5.99414 17.132 6.02028 17.2627 6.07105 17.3846C6.12182 17.5064 6.19621 17.617 6.28994 17.71C6.3829 17.8037 6.4935 17.8781 6.61536 17.9289C6.73722 17.9797 6.86793 18.0058 6.99994 18.0058C7.13195 18.0058 7.26266 17.9797 7.38452 17.9289C7.50638 17.8781 7.61698 17.8037 7.70994 17.71L15.9999 9.41V17C15.9999 17.2652 16.1053 17.5196 16.2928 17.7071C16.4804 17.8946 16.7347 18 16.9999 18C17.2652 18 17.5195 17.8946 17.707 17.7071C17.8946 17.5196 17.9999 17.2652 17.9999 17V7C17.9984 6.86932 17.9712 6.74022 17.9199 6.62Z"
+                                                fill="currentColor">
+                                            </path>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="w-full lg:w-1/2 px-4">
+                                <div class="max-w-xl lg:max-w-md mx-auto lg:mr-0">
+                                    <div class="flex flex-wrap -mx-4 -mb-12">
+                                        <div class="w-full xs:w-1/2 px-4 mb-12">
+                                            <div class="px-6 py-8 rounded-3xl shadow-box-violet overflow-hidden bg-white bg-opacity-10">
+                                                <img class="block h-7 mx-auto" src="{% static "core/home/logo-color-icons2.svg" %}" alt=""/>
+                                            </div>
+                                        </div>
+
+                                        <div class="w-full xs:w-1/2 px-4 mb-12">
+                                            <div class="px-6 py-8 rounded-3xl shadow-box-violet overflow-hidden bg-white bg-opacity-10">
+                                                <img class="block h-7 mx-auto" src="{% static "core/home/logo-color-icons4.svg" %}" alt=""/>
+                                            </div>
+                                        </div>
+
+                                        <div class="w-full xs:w-1/2 px-4 mb-12">
+                                            <div class="px-6 py-8 rounded-3xl shadow-box-violet overflow-hidden bg-white bg-opacity-10">
+                                                <img class="block h-7 mx-auto" src="{% static "core/home/logo-color-icons4.svg" %}" alt="" />
+                                            </div>
+                                        </div>
+
+                                        <div class="w-full xs:w-1/2 px-4 mb-12">
+                                            <div class="px-6 py-8 rounded-3xl shadow-box-violet overflow-hidden bg-white bg-opacity-10">
+                                                <img class="block h-7 mx-auto" src="{% static "core/home/logo-color-icons5.svg" %}" alt="" />
+                                            </div>
+                                        </div>
+
+                                        <div class="w-full xs:w-1/2 px-4 mb-12">
+                                            <div class="px-6 py-8 rounded-3xl shadow-box-violet overflow-hidden bg-white bg-opacity-10">
+                                                <img class="block h-7 mx-auto" src="{% static "core/home/logo-color-icons6.svg" %}" alt=""/>
+                                            </div>
+                                        </div>
+
+                                        <div class="w-full xs:w-1/2 px-4 mb-12">
+                                            <div class="px-6 py-8 rounded-3xl shadow-box-violet overflow-hidden bg-white bg-opacity-10">
+                                                <img class="block h-7 mx-auto" src="{% static "core/home/logo-color-icons2.svg" %}" alt="" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="relative pb-12 pt-20 md:pb-20 lg:pb-24 lg:pt-32 overflow-hidden">
+                <div class="container mx-auto px-4">
+                    <div class="relative max-w-8xl mx-auto">
+                        <img class="absolute top-0 left-0 -mt-20 ml-24 z-10 w-40 lg:w-auto" src="{% static "core/home/robo-bubble.png" %}" alt="" />
+                        <div class="relative px-8 py-20 rounded-5xl overflow-hidden">
+                            <img class="absolute top-0 left-0 w-full h-full object-cover" src="{% static "core/home/bg-gradient-banner.png" %}" alt="" />
+                            <div class="relative max-w-5xl mx-auto text-center">
+                                <h3 class="font-heading text-2xl lg:text-4xl text-black font-medium leading-tight mb-8">Want to build templates like this?</h3>
+                                <h2 class="font-heading text-4xl xs:text-5xl lg:text-6xl text-black font-medium tracking-tight mb-8">Visit Pixel Rocket today</h2>
+                                <a class="group inline-flex w-full sm:w-auto h-14 mb-8 px-7 items-center justify-center text-base font-medium text-black hover:text-violet-800 bg-violet-500 hover:bg-white transition duration-200 rounded-full" href="https://www.pixelrocket.store">
+                                    <span class="mr-2">Learn Frontend Web Development</span>
+                                    <svg width="24" height="24" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M17.9199 6.62C17.8185 6.37565 17.6243 6.18147 17.3799 6.08C17.2597 6.02876 17.1306 6.00158 16.9999 6H6.99994C6.73472 6 6.48037 6.10536 6.29283 6.29289C6.1053 6.48043 5.99994 6.73478 5.99994 7C5.99994 7.26522 6.1053 7.51957 6.29283 7.70711C6.48037 7.89464 6.73472 8 6.99994 8H14.5899L6.28994 16.29C6.19621 16.383 6.12182 16.4936 6.07105 16.6154C6.02028 16.7373 5.99414 16.868 5.99414 17C5.99414 17.132 6.02028 17.2627 6.07105 17.3846C6.12182 17.5064 6.19621 17.617 6.28994 17.71C6.3829 17.8037 6.4935 17.8781 6.61536 17.9289C6.73722 17.9797 6.86793 18.0058 6.99994 18.0058C7.13195 18.0058 7.26266 17.9797 7.38452 17.9289C7.50638 17.8781 7.61698 17.8037 7.70994 17.71L15.9999 9.41V17C15.9999 17.2652 16.1053 17.5196 16.2928 17.7071C16.4804 17.8946 16.7347 18 16.9999 18C17.2652 18 17.5195 17.8946 17.707 17.7071C17.8946 17.5196 17.9999 17.2652 17.9999 17V7C17.9984 6.86932 17.9712 6.74022 17.9199 6.62Z"
+                                            fill="currentColor">
+                                        </path>
+                                    </svg
+                                ></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="relative py-12 sm:pt-24 bg-body overflow-hidden">
+                <div class="absolute top-0 right-0 -mt-112 -mr-52 w-186 h-186 bg-gradient-to-t from-violet-700 via-darkBlue-900 to-transparent rounded-full filter blur-4xl"></div>
+                
+                <img class="absolute top-0 left-1/2 mt-16 sm:ml-20 md:ml-0 animate-spinStar" src="{% static "core/home/blink-star.png" %}" alt=""/>
+                <img class="hidden md:block absolute top-0 right-0 w-32 lg:w-auto mr-20 mt-20" src="{% static "core/home/axe.png" %}" alt=""/>
+                <div class="relative container mx-auto px-4">
+                    <div class="flex flex-wrap items-end -mx-4 mb-16">
+                        <div class="w-full md:w-2/5 px-4 mb-12">
+                            <div class="max-w-sm">
+                                <a class="inline-block mb-16" href="#">
+                                    <img class="block" src="{% static "core/home/logo.svg" %}" alt=""/>
+                                </a>
+
+                                <h3 class="text-3xl font-medium text-white mb-3">Subscribe to our newsletter</h3>
+
+                                <div>
+                                    <span class="block mb-1 text-white text-sm font-medium">Email</span>
+                                    <div class="inline-flex items-center h-12 py-2 pl-3 pr-2 rounded-full bg-gray-800">
+                                        <span>
+                                            <svg width="24" height="25" viewbox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M19 4.5H5C4.20435 4.5 3.44129 4.81607 2.87868 5.37868C2.31607 5.94129 2 6.70435 2 7.5V17.5C2 18.2956 2.31607 19.0587 2.87868 19.6213C3.44129 20.1839 4.20435 20.5 5 20.5H19C19.7956 20.5 20.5587 20.1839 21.1213 19.6213C21.6839 19.0587 22 18.2956 22 17.5V7.5C22 6.70435 21.6839 5.94129 21.1213 5.37868C20.5587 4.81607 19.7956 4.5 19 4.5ZM18.59 6.5L12.71 12.38C12.617 12.4737 12.5064 12.5481 12.3846 12.5989C12.2627 12.6497 12.132 12.6758 12 12.6758C11.868 12.6758 11.7373 12.6497 11.6154 12.5989C11.4936 12.5481 11.383 12.4737 11.29 12.38L5.41 6.5H18.59ZM20 17.5C20 17.7652 19.8946 18.0196 19.7071 18.2071C19.5196 18.3946 19.2652 18.5 19 18.5H5C4.73478 18.5 4.48043 18.3946 4.29289 18.2071C4.10536 18.0196 4 17.7652 4 17.5V7.91L9.88 13.79C10.4425 14.3518 11.205 14.6674 12 14.6674C12.795 14.6674 13.5575 14.3518 14.12 13.79L20 7.91V17.5Z"
+                                                    fill="#80818C">
+                                                </path>
+                                            </svg>
+                                        </span>
+                                        
+                                        <input class="px-2 text-sm placeholder-gray-600 text-gray-200 bg-transparent outline-none" type="email" placeholder="pat@shuffle.dev"/>
+                                        <button class="flex items-center justify-center w-9 h-9 rounded-full text-black hover:text-violet-700 bg-violet-500 hover:bg-white" type="submit">
+                                            <svg width="20" height="21" viewbox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M17.4333 11.0167C17.3937 10.9144 17.3342 10.8209 17.2583 10.7417L14.7583 8.24167C14.6014 8.08475 14.3886 7.99659 14.1667 7.99659C13.9447 7.99659 13.7319 8.08475 13.575 8.24167C13.4181 8.39859 13.3299 8.61142 13.3299 8.83333C13.3299 9.05525 13.4181 9.26808 13.575 9.425L14.6583 10.5H6.66666C6.44564 10.5 6.23368 10.4122 6.0774 10.2559C5.92112 10.0996 5.83332 9.88768 5.83332 9.66667V6.33333C5.83332 6.11232 5.74553 5.90036 5.58925 5.74408C5.43297 5.5878 5.221 5.5 4.99999 5.5C4.77898 5.5 4.56701 5.5878 4.41073 5.74408C4.25445 5.90036 4.16666 6.11232 4.16666 6.33333V9.66667C4.16666 10.3297 4.43005 10.9656 4.89889 11.4344C5.36773 11.9033 6.00362 12.1667 6.66666 12.1667H14.6583L13.575 13.2417C13.4969 13.3191 13.4349 13.4113 13.3926 13.5129C13.3503 13.6144 13.3285 13.7233 13.3285 13.8333C13.3285 13.9433 13.3503 14.0523 13.3926 14.1538C13.4349 14.2554 13.4969 14.3475 13.575 14.425C13.6525 14.5031 13.7446 14.5651 13.8462 14.6074C13.9477 14.6497 14.0566 14.6715 14.1667 14.6715C14.2767 14.6715 14.3856 14.6497 14.4871 14.6074C14.5887 14.5651 14.6809 14.5031 14.7583 14.425L17.2583 11.925C17.3342 11.8457 17.3937 11.7523 17.4333 11.65C17.5167 11.4471 17.5167 11.2196 17.4333 11.0167Z"
+                                                    fill="currentColor">
+                                                </path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="w-full md:w-3/5 px-4">
+                            <div class="flex flex-wrap lg:flex-nowrap -mx-4">
+                                <div class="w-auto mb-10 mr-10 xl:mr-24 px-4">
+                                    <h4 class="text-xl font-medium text-white tracking-tight mb-4">Services</h4>
+                                    <ul>
+                                        <li class="mb-4">
+                                            <a class="inline-block text-gray-500 hover:text-white tracking-tight" href="#">Email Marketing</a>
+                                        </li>
+                                        
+                                        <li class="mb-4">
+                                            <a class="inline-block text-gray-500 hover:text-white tracking-tight" href="#">Campaigns</a>
+                                        </li>
+
+                                        <li class="mb-4">
+                                            <a class="inline-block text-gray-500 hover:text-white tracking-tight" href="#">Branding</a>
+                                        </li>
+
+                                        <li>
+                                            <a class="inline-block text-gray-500 hover:text-white tracking-tight" href="#">Offline</a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="w-auto mb-10 mr-10 xl:mr-24 px-4">
+                                    <h4 class="text-xl font-medium text-white tracking-tight mb-4">About</h4>
+
+                                    <ul>
+                                        <li class="mb-4">
+                                            <a class="inline-block text-gray-500 hover:text-white tracking-tight" href="#">Our Story</a>
+                                        </li>
+
+                                        <li class="mb-4">
+                                            <a class="inline-block text-gray-500 hover:text-white tracking-tight" href="#">Benefits</a>
+                                        </li>
+
+                                        <li class="mb-4">
+                                            <a class="inline-block text-gray-500 hover:text-white tracking-tight" href="#">Team</a>
+                                        </li>
+
+                                        <li>
+                                            <a class="inline-block text-gray-500 hover:text-white tracking-tight" href="#">Careers</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="w-auto px-4">
+                                    <h4 class="text-xl font-medium text-white tracking-tight mb-4">Help</h4>
+                                    <ul>
+                                        <li class="mb-4">
+                                            <a class="inline-block text-gray-500 hover:text-white tracking-tight" href="#">FAQs</a>
+                                        </li>
+                                        
+                                        <li>
+                                            <a class="inline-block text-gray-500 hover:text-white tracking-tight" href="#">Contact Us</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-10 border-t border-gray-800">
+                        <div class="md:flex items-center justify-between">
+                            <div class="mb-6 md:mb-0">
+                                <span class="text-gray-600 tracking-tight">© EconoSimAI. All rights reserved</span>
+                            </div>
+
+                            <div>
+                                <a class="inline-block mr-10 text-white hover:underline tracking-tight" href="#">Terms & Conditions</a>
+                                <a class="inline-block text-white hover:underline tracking-tight" href="#">Privacy Policy</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </body>
+
+    {% block js_scripts %}{% endblock js_scripts %} 
+{% endblock content %}

@@ -1,0 +1,46 @@
+{% extends "base/base_auth.html" %}
+{% load static %}
+
+{% block pag_descrip %} Signup {% endblock pag_descrip %}
+{% block title_pag %} Signup | BlogGate 💻 {% endblock title_pag %}
+{% block favicon %}
+    https://cdn-icons-png.flaticon.com/512/9194/9194815.png
+{% endblock favicon %}
+
+{% block css_styles %}
+    <style>
+        section { 
+            width: 680px;
+        }
+    </style>
+{% endblock css_styles %}
+
+{% block title_auth %} Signup {% endblock title_auth %}
+{% block inputs %}
+    {% if form.non_field_errors %}
+        <ul class="text-red-600 text-sm">
+            {% for error in form.non_field_errors %}
+                <li class="text-center">{{ error }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    
+    <div class="grid grid-cols-2 gap-x-6 gap-y-8 max-md:grid-cols-1">
+        {% for field in form %}
+            <div class="flex flex-col gap-1 justify-end">
+                {% if field.errors %}
+                    {% for error in field.errors %}
+                        <span class="text-red-600 text-sm">{{ error }}</span>
+                    {% endfor %}
+                {% endif %}
+                {{ field }}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock inputs %}
+{% block btn_auth %}
+    <button type="submit" class="mx-auto btn-primary w-80 max-md:w-[70vw] max-md:ml-0">Registrarse</button>
+{% endblock btn_auth %}
+{% block text_alt %}
+    ¿ya tienes una cuenta? <a href="{% url "custom_auth:login" %}" class="text-blue-800 font-semibold tracking-wider transition-colors  hover:text-blue-900">Inicia sesión</a>
+{% endblock text_alt %}

@@ -1,0 +1,65 @@
+@import "tailwindcss";
+
+@source "../../templates/**/*.html";
+@source "../**/*.js";
+
+@theme {
+    /* Colores */
+    --color-skyblue-v1: #4a9cff;
+    --color-blue-v1: rgba(30, 41, 59, 0.7);
+
+    /* Fuentes */
+    --font-playpen-sans: "Playpen Sans";
+    --font-press-start-2p: "Press Start 2P";
+    --font-caveat: "Caveat";
+    --font-roboto-mono: "Roboto Mono";
+    --font-ubuntu: "Ubuntu";
+    --font-raleway: "Raleway";
+
+    /* Anchos / alturas */
+    --spacing-102: 320px;
+    --spacing-107: 420px;
+    --spacing-115: 480px;
+    --spacing-122: 650px;
+
+    --spacing-main: calc(100vh - 80px);
+
+    --spacing-19\/50_w: 38vw;
+    --spacing-3\/4_w: 75vw;
+    --spacing-1\/2_w: 80vw;
+    --spacing-9\/10_w: 90vw;
+}
+
+@layer components {
+    .btn-primary {
+        @apply bg-black text-white font-roboto-mono py-2 px-6 text-lg font-semibold transition duration-300 ease-in-out hover:bg-black/75 ;
+    } 
+
+    .btn-secondary {
+        @apply text-white font-roboto-mono py-2 px-6 text-lg font-semibold transition duration-300 ease-in-out bg-blue-500 rounded hover:bg-blue-600;
+    }
+
+    .btn-danger {
+        @apply  text-white font-roboto-mono py-2 px-6 text-lg font-semibold transition duration-300 ease-in-out bg-red-500 rounded hover:bg-red-600
+    } 
+
+    .bg-gr {
+        @apply bg-clip-text text-transparent bg-linear-to-r;
+    }
+
+    .img-cover {
+        @apply object-cover w-full h-full object-center;
+    }
+
+    .container-sticky { 
+        @apply sticky top-0 left-0 z-30;
+    }
+
+    .flexbox1 {
+        @apply flex flex-col justify-center items-center
+    }
+
+    .flexbox2 { 
+        @apply flex justify-center items-center;
+    }
+}
