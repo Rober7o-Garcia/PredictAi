@@ -17,7 +17,7 @@ def login_view(request):
             login(request, form.get_user())
             request.session["last_login"] = now().isoformat()
             
-            return redirect("gameplay:start-game")
+            return redirect("companies:dashboard")
                      
     else:
         form = LoginForm()

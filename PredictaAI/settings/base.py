@@ -1,4 +1,5 @@
 from pathlib import Path
+from decouple import config
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 SECRET_KEY = 'django-insecure-5@jh1rs7sw&5pd2xl0blvz+blg!h)29(^q5xn(=$1(l3#e#nps'
@@ -82,3 +83,6 @@ LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
+
+OPENAI_API_KEY = config("OPENAI_API_KEY")
+LOGIN_URL = '/custom_auth/login/'

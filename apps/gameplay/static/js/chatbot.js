@@ -8,19 +8,37 @@ function sendMessage() {
     const message = chatbotInput.value.trim();
     if (!message) return;
 
-    // Add user message
+    // Mostrar mensaje del usuario
     addMessage(message, 'user');
     chatbotInput.value = '';
 
-    // Simulate bot typing
+    // Mostrar "escribiendo..."
     showTypingIndicator();
 
-    // Simulate bot response (aquí conectarás tu IA después)
-    setTimeout(() => {
+    fetch('/gameplay/chatbot/api/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken')
+        },
+        credentials: 'same-origin',  // 🔥 ESTO ES LO IMPORTANTE
+        body: JSON.stringify({
+            mensaje: message
+        })
+    })
+
+    .then(response => response.json())
+    .then(data => {
+    hideTypingIndicator();
+    addMessage(data.respuesta || data.error || '⚠️ Respuesta inválida', 'bot');
+    })
+    .catch(error => {
         hideTypingIndicator();
-        addMessage('Entendido. Estoy procesando tu solicitud...', 'bot');
-    }, 1500);
+        addMessage('❌ Error al comunicar con el servidor', 'bot');
+        console.error(error);
+    });
 }
+
 
 chatbotSend.addEventListener('click', sendMessage);
 chatbotInput.addEventListener('keypress', (e) => {
@@ -79,4 +97,19 @@ function hideTypingIndicator() {
         typingIndicator.remove();
         typingIndicator = null;
     }
+}
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let cookie of cookies) {
+            cookie = cookie.trim();
+            if (cookie.startsWith(name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
 }
