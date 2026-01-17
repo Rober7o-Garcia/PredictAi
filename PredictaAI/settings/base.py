@@ -52,6 +52,8 @@ TEMPLATES = [
     },
 ]
 
+
+
 WSGI_APPLICATION = 'PredictaAI.wsgi.application'
 
 AUTH_PASSWORD_VALIDATORS = [

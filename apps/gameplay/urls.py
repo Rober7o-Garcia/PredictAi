@@ -1,8 +1,8 @@
 from django.urls import path
-from .views import game_view
+from . import views
 
-app_name = "gameplay"
+app_name = 'gameplay'
 
 urlpatterns = [
-    path("start-game/", game_view, name="start_game")    
+    path('chat/', views.chatbot, name='chatbot'),
 ]

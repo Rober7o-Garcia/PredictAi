@@ -26,6 +26,7 @@ urlpatterns = [
     path("custom_auth/", include("apps.custom_auth.urls", namespace="custom_auth")),
     path("reports/", include("apps.reports.urls", namespace="reports")),
     path("gameplay", include("apps.gameplay.urls", namespace="gameplay")),
+    path("companies/", include("apps.companies.urls", namespace="companies")),
 ]
 
 if settings.DEBUG:

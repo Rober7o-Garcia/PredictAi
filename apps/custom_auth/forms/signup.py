@@ -132,7 +132,7 @@ class SignUpForm(UserCreationForm):
     
     def save(self, commit=True):
         user = super().save(commit=False)
-        user.is_active = False   # 🔴 clave
+        user.is_active = True   # 🔴 clave
         if commit:
             user.save()
         return user
