@@ -197,7 +197,6 @@ function getCookie(name) {
     return cookieValue;
 }
 
-<<<<<<< HEAD
 // ==========================================
 // VOICE RECOGNITION IMPLEMENTATION
 // ==========================================
@@ -258,49 +257,3 @@ if ('webkitSpeechRecognition' in window) {
     console.warn("Web Speech API no soportada en este navegador.");
     micBtn.style.display = 'none';
 }
-=======
-// 🆕 NUEVA CONVERSACIÓN
-function nuevaConversacion() {
-    fetch('/gameplay/chat/nueva/', {  
-        method: 'POST',
-        headers: {
-            'X-CSRFToken': getCookie('csrftoken')
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        window.location.href = data.url;
-    });
-}
-
-// 🆕 ELIMINAR CONVERSACIÓN
-// 🆕 ELIMINAR CONVERSACIÓN
-function eliminarConversacion(event, conversacionId) {
-    event.preventDefault();
-    event.stopPropagation();
-    
-    if (!confirm('¿Eliminar esta conversación?')) return;
-    
-    fetch(`/gameplay/chat/eliminar/${conversacionId}/`, {
-        method: 'DELETE',
-        headers: {
-            'X-CSRFToken': getCookie('csrftoken')
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.redirect_url) {
-            window.location.href = data.redirect_url;  // ⬅️ Usar la URL que envía el backend
-        }
-    })
-    .catch(error => {
-        console.error('Error al eliminar:', error);
-        alert('Error al eliminar la conversación');
-    });
-}
-
-// Auto-scroll al cargar
-document.addEventListener('DOMContentLoaded', function() {
-    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
-});
->>>>>>> b36e20563329b636011ab2d33450c75a92418721

@@ -33,29 +33,6 @@
             </div>
         </div>
 
-<<<<<<< HEAD
-        <div class="chatbot-input-area">
-            <input 
-                type="text" 
-                class="chatbot-input" 
-                id="chatbotInput" 
-                placeholder="Escribe tu mensaje..."
-                autocomplete="off"
-            >
-            
-            <button class="chatbot-mic-btn" id="chatbotMic" type="button">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
-                    <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
-                </svg>
-            </button>
-
-            <button class="chatbot-send-btn" id="chatbotSend">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
-                </svg>
-            </button>
-=======
         <!-- 💬 CHAT PRINCIPAL -->
         <div class="chat-fullscreen">
             <div class="chatbot-header">
@@ -101,6 +78,7 @@
                 {% endif %}
             </div>
 
+            <!-- ⌨️ INPUT + MIC + ENVIAR -->
             <div class="chatbot-input-area">
                 <input 
                     type="text" 
@@ -109,13 +87,22 @@
                     placeholder="Escribe tu mensaje..."
                     autocomplete="off"
                 >
+
+                <!-- 🎤 BOTÓN MICRÓFONO -->
+                <button class="chatbot-mic-btn" id="chatbotMic" type="button">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+                        <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+                    </svg>
+                </button>
+
+                <!-- 📤 BOTÓN ENVIAR -->
                 <button class="chatbot-send-btn" id="chatbotSend">
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
                     </svg>
                 </button>
             </div>
->>>>>>> b36e20563329b636011ab2d33450c75a92418721
         </div>
     </div>
 

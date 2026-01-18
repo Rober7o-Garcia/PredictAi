@@ -6,13 +6,6 @@ import json
 
 from .services.openai_service import interpretar_mensaje
 from .services.negocio_service import ejecutar_accion
-<<<<<<< HEAD
-from django.views.decorators.csrf import ensure_csrf_cookie
-
-@ensure_csrf_cookie
-def chatbot(request):
-    return render(request, 'chatbot.html')
-=======
 from apps.gameplay.models import MensajeChat, Conversacion
 
 
@@ -44,7 +37,6 @@ def chatbot(request, conversacion_id=None):
         'mensajes': mensajes,
         'conversaciones': conversaciones
     })
->>>>>>> b36e20563329b636011ab2d33450c75a92418721
 
 
 @require_POST
