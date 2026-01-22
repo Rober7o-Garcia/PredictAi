@@ -23,7 +23,8 @@ INSTALLED_APPS = [
     'apps.gameplay.apps.GameplayConfig',
     'apps.market_ai.apps.MarketAiConfig',
     'apps.reports.apps.ReportsConfig',
-    'apps.simulation.apps.SimulationConfig'
+    'apps.simulation.apps.SimulationConfig',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [

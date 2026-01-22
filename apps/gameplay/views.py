@@ -60,42 +60,60 @@ def chatbot_api(request):
     if not conversacion_id:
         return JsonResponse({"error": "❌ ID de conversación requerido"}, status=400)
 
-    # Obtener conversación
     conversacion = get_object_or_404(Conversacion, id=conversacion_id)
 
-    # ✅ GUARDAR MENSAJE DEL USUARIO
+    # Guardar mensaje del usuario
     MensajeChat.objects.create(
         conversacion=conversacion,
         tipo='user',
         mensaje=mensaje
     )
     
-    # Verificar si es el primer mensaje
     es_primer_mensaje = conversacion.mensajes.count() == 1
     
-    # Generar título automático si es el primer mensaje
     if es_primer_mensaje:
         conversacion.generar_titulo_automatico()
 
-    # Interpretar con OpenAI
-    data = interpretar_mensaje(mensaje)
+    # ✅ OBTENER HISTORIAL DE LA CONVERSACIÓN (últimos 10 mensajes)
+    mensajes_previos = conversacion.mensajes.order_by('-fecha')[:10]
+    historial = []
+    
+    for msg in reversed(mensajes_previos):  # Revertir para orden cronológico
+        historial.append({
+            "role": "user" if msg.tipo == "user" else "assistant",
+            "content": msg.mensaje
+        })
 
-    if not data:
-        respuesta = "⚠️ No entendí tu mensaje, intenta decirlo de otra forma."
-    else:
+    # DISTINGUIR ENTRE REGISTRO vs CONSULTA/ANÁLISIS
+    from .services.intelligent_business_assistant import asistente_negocio
+    from .services.openai_service import interpretar_mensaje
+    from .services.negocio_service import ejecutar_accion
+    
+    # Palabras clave de ESCRITURA (modificar datos)
+    keywords_escritura = [
+        'registrar', 'registra', 'vendí', 'vender', 'vende',
+        'agregar', 'agrega', 'crear', 'crea', 'añadir', 'añade'
+    ]
+    
+    es_accion_escritura = any(word in mensaje.lower() for word in keywords_escritura)
+    
+    if es_accion_escritura:
+        # Sistema antiguo para registros
+        data = interpretar_mensaje(mensaje)
         respuesta = ejecutar_accion(data)
+    else:
+        # ✅ PASAR HISTORIAL al sistema inteligente
+        respuesta = asistente_negocio(mensaje, historial=historial)
 
-    # ✅ GUARDAR RESPUESTA DEL BOT
+    # Guardar respuesta del bot
     MensajeChat.objects.create(
         conversacion=conversacion,
         tipo='bot',
         mensaje=respuesta
     )
     
-    # Actualizar fecha de actualización
     conversacion.save()
 
-    # ✅ DEVOLVER TAMBIÉN EL TÍTULO SI ES EL PRIMER MENSAJE
     response_data = {"respuesta": respuesta}
     
     if es_primer_mensaje:
