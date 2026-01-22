@@ -56,6 +56,15 @@ class Producto(models.Model):
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     fecha_actualizacion = models.DateTimeField(auto_now=True)
     
+    codigo_barras = models.CharField(
+        max_length=50,
+        unique=True,
+        null=True,
+        blank=True,
+        verbose_name="Código de Barras",
+        help_text="Código de barras del producto (EAN-13, UPC, Code-128, etc.)"
+    )
+    
     class Meta:
         ordering = ['nombre']
     

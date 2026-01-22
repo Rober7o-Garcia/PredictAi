@@ -27,6 +27,7 @@ urlpatterns = [
     path("reports/", include("apps.reports.urls", namespace="reports")),
     path("gameplay/", include("apps.gameplay.urls", namespace="gameplay")),
     path("companies/", include("apps.companies.urls", namespace="companies")),
+    path('sales/', include('apps.sales.urls')), 
 ]
 
 if settings.DEBUG:

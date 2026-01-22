@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'apps.reports.apps.ReportsConfig',
     'apps.simulation.apps.SimulationConfig',
     'rest_framework',
+    'apps.sales',
 ]
 
 MIDDLEWARE = [

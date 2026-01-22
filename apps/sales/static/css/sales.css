@@ -1,0 +1,972 @@
+/**
+ * sales.css - Estilos del Punto de Venta
+ * MiNegocio Smart - Sistema POS con Voz
+ */
+
+/* ========================================
+   VARIABLES Y CONFIGURACIÓN GENERAL
+   ======================================== */
+
+:root {
+    --primary-color: #667eea;
+    --primary-dark: #5568d3;
+    --secondary-color: #764ba2;
+    --success-color: #10b981;
+    --danger-color: #ef4444;
+    --warning-color: #f59e0b;
+    --info-color: #3b82f6;
+    
+    --bg-light: #f8f9fa;
+    --bg-white: #ffffff;
+    --text-primary: #1f2937;
+    --text-secondary: #6b7280;
+    --text-muted: #9ca3af;
+    
+    --border-color: #e5e7eb;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    
+    --radius-sm: 0.375rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    --radius-xl: 1rem;
+    
+    --transition-fast: 150ms ease;
+    --transition-normal: 300ms ease;
+    --transition-slow: 500ms ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.container-fluid {
+    padding: 0;
+    height: 100vh;
+}
+
+.row {
+    margin: 0;
+}
+
+/* ========================================
+   LAYOUT PRINCIPAL
+   ======================================== */
+
+.scanner-column {
+    background: var(--bg-white);
+    padding: 2rem;
+    height: 100vh;
+    overflow-y: auto;
+    border-right: 1px solid var(--border-color);
+}
+
+.cart-column {
+    background: var(--bg-light);
+    padding: 2rem;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* ========================================
+   HEADER DEL POS
+   ======================================== */
+
+.header-pos {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.header-pos h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin: 0;
+}
+
+#toggle-voice-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    border-radius: var(--radius-lg);
+    transition: all var(--transition-normal);
+    box-shadow: var(--shadow-md);
+}
+
+#toggle-voice-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+#toggle-voice-btn:active {
+    transform: translateY(0);
+}
+
+/* ========================================
+   ESTADO DE VOZ
+   ======================================== */
+
+.voice-status {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: var(--radius-lg);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: var(--shadow-lg);
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.pulse-indicator {
+    width: 12px;
+    height: 12px;
+    background: white;
+    border-radius: 50%;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.5;
+        transform: scale(1.2);
+    }
+}
+
+#voice-status-text {
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+/* ========================================
+   SCANNER DE CÓDIGO DE BARRAS
+   ======================================== */
+
+.scanner-container {
+    position: relative;
+    background: #000;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow-xl);
+}
+
+#barcode-reader {
+    width: 100%;
+    min-height: 400px;
+    position: relative;
+}
+
+#barcode-reader video {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.scanner-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.scanner-overlay::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 150px;
+    border: 3px solid rgba(16, 185, 129, 0.8);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
+}
+
+.scan-line {
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    right: 10%;
+    height: 2px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(16, 185, 129, 0.8) 50%, 
+        transparent 100%);
+    animation: scanLine 2s infinite;
+    z-index: 1;
+}
+
+@keyframes scanLine {
+    0%, 100% {
+        transform: translateY(-75px);
+    }
+    50% {
+        transform: translateY(75px);
+    }
+}
+
+.scan-instruction {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-lg);
+    font-size: 0.95rem;
+    font-weight: 600;
+    z-index: 2;
+    animation: fadeInOut 2s infinite;
+}
+
+@keyframes fadeInOut {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+}
+
+/* Feedback de escaneo exitoso */
+.scanner-overlay.scan-success::before {
+    border-color: var(--success-color);
+    animation: scanSuccess 0.5s ease;
+}
+
+@keyframes scanSuccess {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); }
+    50% { transform: translate(-50%, -50%) scale(1.05); }
+}
+
+/* ========================================
+   INFORMACIÓN DEL PRODUCTO
+   ======================================== */
+
+.product-info {
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.product-card {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-xl);
+    padding: 2rem;
+    box-shadow: var(--shadow-lg);
+}
+
+.product-card h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.product-code,
+.product-price,
+.product-stock {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+}
+
+.product-code span,
+.product-price span,
+.product-stock span {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.product-price {
+    font-size: 1.25rem;
+    color: var(--success-color);
+    font-weight: 700;
+}
+
+.quantity-input {
+    margin-top: 1.5rem;
+}
+
+.quantity-input label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.quantity-input .input-group {
+    display: flex;
+    align-items: stretch;
+}
+
+.quantity-input .input-group button {
+    width: 50px;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.quantity-input .input-group input {
+    text-align: center;
+    font-size: 1.25rem;
+    font-weight: 600;
+    border-left: none;
+    border-right: none;
+}
+
+#add-to-cart-btn {
+    font-size: 1.1rem;
+    padding: 0.875rem;
+    font-weight: 700;
+    border-radius: var(--radius-lg);
+    transition: all var(--transition-normal);
+}
+
+#add-to-cart-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+#add-to-cart-btn:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+/* ========================================
+   LOG DE CONVERSACIÓN
+   ======================================== */
+
+.chatbot-transcript {
+    margin-top: 2rem;
+    background: var(--bg-light);
+    border-radius: var(--radius-xl);
+    padding: 1.5rem;
+    border: 2px solid var(--border-color);
+}
+
+.chatbot-transcript h5 {
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.conversation-log {
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 1rem;
+    background: white;
+    border-radius: var(--radius-lg);
+}
+
+.conversation-log::-webkit-scrollbar {
+    width: 8px;
+}
+
+.conversation-log::-webkit-scrollbar-track {
+    background: var(--bg-light);
+    border-radius: 4px;
+}
+
+.conversation-log::-webkit-scrollbar-thumb {
+    background: var(--text-muted);
+    border-radius: 4px;
+}
+
+.conversation-log::-webkit-scrollbar-thumb:hover {
+    background: var(--text-secondary);
+}
+
+.conversation-message {
+    margin-bottom: 1rem;
+    animation: messageSlide 0.3s ease;
+}
+
+@keyframes messageSlide {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.conversation-message.user .message-bubble {
+    background: var(--primary-color);
+    color: white;
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.conversation-message.bot .message-bubble {
+    background: var(--bg-light);
+    color: var(--text-primary);
+}
+
+.message-bubble {
+    max-width: 80%;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+}
+
+.message-bubble p {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.message-time {
+    display: block;
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+    opacity: 0.7;
+}
+
+/* ========================================
+   CARRITO DE COMPRAS
+   ======================================== */
+
+.cart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.cart-header h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin: 0;
+}
+
+#clear-cart-btn {
+    font-weight: 600;
+    transition: all var(--transition-fast);
+}
+
+.cart-items {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 1.5rem;
+    padding-right: 0.5rem;
+}
+
+.cart-items::-webkit-scrollbar {
+    width: 8px;
+}
+
+.cart-items::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.cart-items::-webkit-scrollbar-thumb {
+    background: var(--text-muted);
+    border-radius: 4px;
+}
+
+.cart-item {
+    background: white;
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all var(--transition-fast);
+    animation: itemSlide 0.3s ease;
+}
+
+@keyframes itemSlide {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.cart-item:hover {
+    border-color: var(--primary-color);
+    box-shadow: var(--shadow-md);
+    transform: translateX(-4px);
+}
+
+.item-info {
+    flex: 1;
+}
+
+.item-info strong {
+    display: block;
+    font-size: 1rem;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+}
+
+.item-info small {
+    font-size: 0.875rem;
+}
+
+.item-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.item-subtotal {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--success-color);
+}
+
+.item-actions button {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all var(--transition-fast);
+}
+
+.item-actions button:hover {
+    transform: scale(1.1);
+}
+
+/* ========================================
+   RESUMEN DEL CARRITO
+   ======================================== */
+
+.cart-summary {
+    background: white;
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow-md);
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    font-size: 1rem;
+}
+
+.summary-row.total {
+    border-top: 2px solid var(--border-color);
+    margin-top: 0.5rem;
+    padding-top: 1rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.total-amount {
+    color: var(--success-color);
+    font-size: 1.5rem;
+}
+
+/* ========================================
+   ACCIONES DEL CARRITO
+   ======================================== */
+
+.cart-actions {
+    text-align: center;
+}
+
+#finalize-sale-btn {
+    font-size: 1.25rem;
+    padding: 1rem;
+    font-weight: 700;
+    border-radius: var(--radius-xl);
+    transition: all var(--transition-normal);
+    box-shadow: var(--shadow-lg);
+}
+
+#finalize-sale-btn:not(:disabled):hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-xl);
+}
+
+#finalize-sale-btn:not(:disabled):active {
+    transform: translateY(-2px);
+}
+
+#finalize-sale-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.cart-actions p {
+    margin-top: 0.75rem;
+    font-size: 0.875rem;
+}
+
+/* ========================================
+   MODAL DE CONFIRMACIÓN
+   ======================================== */
+
+.modal-content {
+    border-radius: var(--radius-xl);
+    border: none;
+    box-shadow: var(--shadow-xl);
+}
+
+.modal-header {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: white;
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    padding: 1.5rem;
+}
+
+.modal-title {
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
+.modal-body {
+    padding: 2rem;
+    font-size: 1.1rem;
+}
+
+.modal-body strong {
+    color: var(--success-color);
+    font-size: 1.5rem;
+}
+
+.modal-footer {
+    padding: 1.5rem;
+    border-top: 2px solid var(--border-color);
+}
+
+/* ========================================
+   UTILIDADES
+   ======================================== */
+
+.d-none {
+    display: none !important;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+
+@media (max-width: 768px) {
+    .container-fluid {
+        height: auto;
+    }
+    
+    .row {
+        flex-direction: column;
+    }
+    
+    .scanner-column,
+    .cart-column {
+        height: auto;
+        min-height: 100vh;
+        border-right: none;
+        border-bottom: 2px solid var(--border-color);
+    }
+    
+    .header-pos {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: stretch;
+    }
+    
+    #toggle-voice-btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .scanner-container {
+        margin-bottom: 1.5rem;
+    }
+    
+    #barcode-reader {
+        min-height: 300px;
+    }
+    
+    .product-card {
+        padding: 1.5rem;
+    }
+    
+    .chatbot-transcript {
+        margin-top: 1.5rem;
+    }
+    
+    .conversation-log {
+        max-height: 200px;
+    }
+    
+    .cart-items {
+        max-height: 400px;
+    }
+}
+
+@media (max-width: 480px) {
+    .scanner-column,
+    .cart-column {
+        padding: 1rem;
+    }
+    
+    .header-pos h2 {
+        font-size: 1.5rem;
+    }
+    
+    #toggle-voice-btn {
+        font-size: 0.9rem;
+        padding: 0.625rem 1rem;
+    }
+    
+    .product-card h3 {
+        font-size: 1.25rem;
+    }
+    
+    .cart-header h3 {
+        font-size: 1.25rem;
+    }
+    
+    #finalize-sale-btn {
+        font-size: 1.1rem;
+        padding: 0.875rem;
+    }
+}
+
+/* ========================================
+   ANIMACIONES DE CARGA
+   ======================================== */
+
+.loading-spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ========================================
+   ESTADOS DE BOTONES
+   ======================================== */
+
+.btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn:active::before {
+    width: 300px;
+    height: 300px;
+}
+
+/* ========================================
+   ACCESIBILIDAD
+   ======================================== */
+
+.btn:focus,
+input:focus,
+select:focus,
+textarea:focus {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ========================================
+   TEMA OSCURO (Opcional - para futuro)
+   ======================================== */
+
+@media (prefers-color-scheme: dark) {
+    /* Aquí puedes agregar estilos para tema oscuro si lo necesitas */
+}
+
+/* ========================================
+   SELECTOR DE CÁMARA
+   ======================================== */
+
+.camera-select-container {
+    margin-bottom: 2rem;
+    animation: fadeIn 0.3s ease;
+}
+
+.camera-select-container .card {
+    border: 2px solid var(--primary-color);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+}
+
+.camera-select-container .card-body {
+    padding: 2rem;
+}
+
+.camera-select-container .card-title {
+    color: var(--primary-color);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.camera-select-container .form-select {
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 0.875rem 1rem;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all var(--transition-fast);
+}
+
+.camera-select-container .form-select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+#start-scanner-btn {
+    font-size: 1.1rem;
+    padding: 0.875rem;
+    font-weight: 700;
+    border-radius: var(--radius-lg);
+    transition: all var(--transition-normal);
+    box-shadow: var(--shadow-md);
+}
+
+#start-scanner-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+#start-scanner-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* ========================================
+   BARRA DE ESTADO DEL SCANNER
+   ======================================== */
+
+.scanner-status-bar {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: var(--radius-lg);
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow-md);
+    animation: slideDown 0.3s ease;
+}
+
+.scanner-status-bar span {
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+#change-camera-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    font-weight: 600;
+    transition: all var(--transition-fast);
+}
+
+#change-camera-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-1px);
+}
+
+/* ========================================
+   ANIMACIONES
+   ======================================== */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
