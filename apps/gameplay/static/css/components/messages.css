@@ -89,3 +89,252 @@
 
 .typing-dot:nth-child(2) { animation-delay: 0.2s; }
 .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+/* ====================================
+   FORMATO DE RESPUESTAS DEL BOT
+==================================== */
+
+/* Encabezados en mensajes */
+.message.bot h1,
+.message.bot h2,
+.message.bot h3,
+.message.bot h4 {
+    margin: 16px 0 10px 0;
+    color: #2d3436;
+    font-weight: 600;
+}
+
+.message.bot h1 { font-size: 20px; }
+.message.bot h2 { font-size: 18px; }
+.message.bot h3 { font-size: 16px; }
+.message.bot h4 { font-size: 15px; }
+
+/* Párrafos */
+.message.bot p {
+    margin: 8px 0;
+    line-height: 1.6;
+}
+
+/* Listas */
+.message.bot .chatbot-list {
+    margin: 12px 0;
+    padding-left: 20px;
+}
+
+.message.bot .chatbot-list li {
+    margin: 6px 0;
+    line-height: 1.5;
+}
+
+.message.bot .chatbot-list-numbered li {
+    font-weight: 500;
+}
+
+/* Strong/Bold */
+.message.bot strong {
+    font-weight: 600;
+    color: #2d3436;
+}
+
+/* Énfasis/Italic */
+.message.bot em {
+    font-style: italic;
+    color: #636e72;
+}
+
+/* Código inline */
+.message.bot .inline-code {
+    background: rgba(102, 126, 234, 0.1);
+    color: #667eea;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+}
+
+/* Bloques de código */
+.message.bot .code-block {
+    background: #2d3436;
+    color: #dfe6e9;
+    padding: 12px;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 12px 0;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+}
+
+/* ====================================
+   TABLAS RESPONSIVE EN MENSAJES
+==================================== */
+
+/* Contenedor de tabla con scroll horizontal */
+.message.bot .table-wrapper {
+    overflow-x: auto;
+    margin: 12px 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    max-width: 100%; /* ✅ IMPORTANTE */
+    -webkit-overflow-scrolling: touch; /* Smooth scroll en móvil */
+}
+
+.message.bot .chatbot-table {
+    width: 100%;
+    min-width: 500px; /* ✅ Ancho mínimo para que se vea bien */
+    max-width: 100%; /* ✅ No exceder el contenedor */
+    border-collapse: collapse;
+    background: white;
+    table-layout: auto; /* ✅ Ajustar columnas automáticamente */
+}
+
+.message.bot .chatbot-table th {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 10px 12px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 13px;
+    white-space: nowrap; /* ✅ Evitar saltos de línea en headers */
+}
+
+.message.bot .chatbot-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 14px;
+    word-wrap: break-word; /* ✅ Romper palabras largas */
+}
+
+.message.bot .chatbot-table tr:last-child td {
+    border-bottom: none;
+}
+
+.message.bot .chatbot-table tr:hover {
+    background: #f8f9fa;
+}
+
+/* ====================================
+   FIX PARA CONTENEDOR DE MENSAJES
+==================================== */
+
+/* Asegurar que el contenedor de mensajes no se rompa */
+.chatbot-messages {
+    overflow-y: auto;
+    overflow-x: hidden; /* ✅ IMPORTANTE: No scroll horizontal en el contenedor principal */
+    padding: 20px;
+    flex: 1;
+}
+
+/* Asegurar que los mensajes respeten el ancho */
+.message {
+    max-width: 80%;
+    margin-bottom: 16px;
+    animation: messageSlide 0.3s ease;
+    word-wrap: break-word; /* ✅ Romper palabras largas */
+    overflow-wrap: break-word; /* ✅ Alternativa moderna */
+}
+
+.message.user {
+    margin-left: auto;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.message.bot {
+    margin-right: auto;
+    background: #f8f9fa;
+    color: #2d3436;
+}
+
+/* El contenido del mensaje debe respetar el ancho */
+.message-content {
+    padding: 12px 16px;
+    border-radius: 12px;
+    position: relative;
+    max-width: 100%; /* ✅ IMPORTANTE */
+    overflow: hidden; /* ✅ Ocultar overflow */
+}
+
+/* ====================================
+   RESPONSIVE PARA MÓVILES
+==================================== */
+
+@media (max-width: 768px) {
+    .message {
+        max-width: 90%;
+    }
+    
+    .message.bot .chatbot-table {
+        min-width: 400px; /* Menor ancho mínimo en móvil */
+        font-size: 12px;
+    }
+    
+    .message.bot .chatbot-table th,
+    .message.bot .chatbot-table td {
+        padding: 8px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .message {
+        max-width: 95%;
+    }
+    
+    .message.bot .chatbot-table {
+        min-width: 300px;
+        font-size: 11px;
+    }
+    
+    .message.bot .chatbot-table th,
+    .message.bot .chatbot-table td {
+        padding: 6px;
+        font-size: 11px;
+    }
+}
+
+/* Citas */
+.message.bot blockquote {
+    border-left: 4px solid #667eea;
+    padding-left: 12px;
+    margin: 12px 0;
+    color: #636e72;
+    font-style: italic;
+}
+
+/* Líneas horizontales */
+.message.bot hr {
+    border: none;
+    border-top: 2px solid #e0e0e0;
+    margin: 16px 0;
+}
+
+/* ==========================================
+   FÓRMULAS MATEMÁTICAS (LaTeX)
+   ========================================== */
+.math-block {
+    display: block;
+    margin: 16px 0;
+    padding: 12px;
+    background: #f8f9fa;
+    border-left: 4px solid #667eea;
+    border-radius: 4px;
+    overflow-x: auto;
+    text-align: center;
+}
+
+.math-inline {
+    display: inline-block;
+    margin: 0 4px;
+    padding: 2px 6px;
+    background: rgba(102, 126, 234, 0.1);
+    border-radius: 4px;
+}
+
+/* Ajustes para KaTeX */
+.katex {
+    font-size: 1.1em;
+}
+
+.katex-display {
+    margin: 1em 0;
+}

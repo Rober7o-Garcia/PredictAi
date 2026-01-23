@@ -970,3 +970,69 @@ textarea:focus {
         transform: translateY(0);
     }
 }
+
+/* ========================================
+   AJUSTES PARA QUAGGA
+   ======================================== */
+
+#barcode-reader {
+    position: relative;
+    width: 100%;
+}
+
+#barcode-reader video,
+#barcode-reader canvas {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-lg);
+}
+
+#barcode-reader canvas.drawingBuffer {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* Overlay para Quagga */
+.scanner-overlay {
+    pointer-events: none;
+}
+
+.scanner-overlay::before {
+    box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.4);
+}
+
+/* ========================================
+   ANIMACIÓN DE FLASH ULTRA-RÁPIDA
+   ======================================== */
+
+@keyframes flashFade {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+/* Scan success más rápido */
+.scanner-overlay.scan-success::before {
+    border-color: #10b981 !important;
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.8), 0 0 0 9999px rgba(0, 0, 0, 0.4) !important;
+    animation: scanSuccessPulse 200ms ease !important;
+}
+
+@keyframes scanSuccessPulse {
+    0% { 
+        transform: translate(-50%, -50%) scale(1);
+        border-width: 3px;
+    }
+    50% { 
+        transform: translate(-50%, -50%) scale(1.03);
+        border-width: 5px;
+    }
+    100% { 
+        transform: translate(-50%, -50%) scale(1);
+        border-width: 3px;
+    }
+}

@@ -572,6 +572,12 @@ const ChatUI = {
         `;
         
         DOM.messagesContainer.appendChild(messageDiv);
+
+        // ✅ RENDERIZAR FÓRMULAS CON MATHJAX
+        if (sender === 'bot' && typeof MathJax !== 'undefined') {
+            MathJax.typesetPromise([messageDiv]).catch((err) => console.log(err));
+        }
+
         this.scrollToBottom();
     },
 
@@ -588,6 +594,11 @@ const ChatUI = {
         `;
         
         DOM.messagesContainer.appendChild(messageDiv);
+
+        // ✅ RENDERIZAR FÓRMULAS CON MATHJAX
+        if (msgData.tipo === 'bot' && typeof MathJax !== 'undefined') {
+            MathJax.typesetPromise([messageDiv]).catch((err) => console.log(err));
+        }
         this.scrollToBottom();
     },
 
@@ -826,6 +837,118 @@ const ConversationManager = {
         }
     }
 };
+
+// ==========================================
+// MÓDULO: Gestión de Insights
+// ==========================================
+const InsightsManager = {
+    modal: null,
+    
+    init() {
+        this.modal = document.getElementById('insightsModal');
+    },
+    
+    abrir() {
+        if (this.modal) {
+            this.modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+    },
+    
+    cerrar() {
+        if (this.modal) {
+            this.modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+    },
+    
+    async descartarInsight(insightId) {
+        try {
+            const response = await fetch(`/gameplay/insights/${insightId}/descartar/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': Utils.getCookie('csrftoken')
+                }
+            });
+            
+            if (response.ok) {
+                // Remover visualmente
+                const card = document.querySelector(`[data-insight-id="${insightId}"]`);
+                if (card) {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateX(-20px)';
+                    setTimeout(() => card.remove(), 300);
+                }
+                
+                // Actualizar contador
+                this.actualizarContador();
+                
+                Notification.success('Insight marcado', 'El insight fue marcado como visto', 2000);
+            }
+        } catch (error) {
+            console.error('Error al descartar insight:', error);
+            Notification.error('Error', 'No se pudo marcar el insight');
+        }
+    },
+    
+    async descartarTodos() {
+        try {
+            const response = await fetch('/gameplay/insights/descartar-todos/', {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': Utils.getCookie('csrftoken')
+                }
+            });
+            
+            if (response.ok) {
+                // Cerrar modal y recargar
+                this.cerrar();
+                location.reload();
+            }
+        } catch (error) {
+            console.error('Error al descartar todos:', error);
+            Notification.error('Error', 'No se pudieron marcar los insights');
+        }
+    },
+    
+    actualizarContador() {
+        const cards = document.querySelectorAll('.insight-card');
+        const count = cards.length;
+        
+        const badge = document.querySelector('.badge-count');
+        if (badge) {
+            badge.textContent = count;
+            
+            if (count === 0) {
+                this.cerrar();
+                // Ocultar badge
+                const btn = document.getElementById('insightsButton');
+                if (btn) btn.style.display = 'none';
+            }
+        }
+    }
+};
+
+// Funciones globales para el HTML
+function abrirModalInsights() {
+    InsightsManager.abrir();
+}
+
+function cerrarModalInsights(event) {
+    if (!event || event.target === event.currentTarget) {
+        InsightsManager.cerrar();
+    }
+}
+
+function descartarInsight(id) {
+    InsightsManager.descartarInsight(id);
+}
+
+function descartarTodosInsights() {
+    InsightsManager.descartarTodos();
+}
+
+
 // ==========================================
 // MÓDULO: Mensajes - Envío de mensajes
 // ==========================================
@@ -1008,4 +1131,6 @@ document.addEventListener('DOMContentLoaded', () => {
     SidebarManager.restoreState();
     VoiceRecognition.init();
     setupEventListeners();
+    InsightsManager.init();
+
 });

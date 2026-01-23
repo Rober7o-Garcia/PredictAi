@@ -8,6 +8,17 @@ from .services.negocio_service import ejecutar_accion
 from apps.gameplay.models import MensajeChat, Conversacion
 from django.http import JsonResponse
 from django.views.decorators.http import require_GET
+from .services.intelligent_business_assistant import asistente_negocio
+from .services.openai_service import interpretar_mensaje
+from .services.negocio_service import ejecutar_accion
+from .services.memory_manager import procesar_y_guardar_conocimiento
+from .services.pattern_analyzer import ejecutar_analisis_completo, obtener_insights_no_vistos
+from .models import MensajeChat, Conversacion, InsightNegocio  # ✅ Agregar InsightNegocio
+from django.utils import timezone
+from .services.text_formatter import formatear_respuesta_chatbot
+
+
+    
 
 
 
@@ -15,18 +26,22 @@ def chatbot(request, conversacion_id=None):
     """Vista principal del chatbot"""
     
     if conversacion_id:
-        # Si viene con ID, usar esa conversación
         conversacion_actual = get_object_or_404(Conversacion, id=conversacion_id)
     else:
-        # ✅ Si no hay ID, buscar la conversación más reciente
         conversacion_actual = Conversacion.objects.first()
         
-        # Si no hay ninguna conversación, crear una
         if not conversacion_actual:
             conversacion_actual = Conversacion.objects.create()
         
-        # Redirigir a la URL con el ID para evitar crear duplicados al recargar
         return redirect('gameplay:chatbot_conversacion', conversacion_id=conversacion_actual.id)
+    
+    # ✅ EJECUTAR ANÁLISIS DE PATRONES (si hace más de 24 horas del último)
+    from .models import InsightNegocio
+    ultimo_insight = InsightNegocio.objects.first()
+    
+    if not ultimo_insight or (timezone.now() - ultimo_insight.detectado_en).days >= 1:
+        # Ejecutar en background (o síncronamente para demo)
+        ejecutar_analisis_completo()
     
     # Cargar mensajes de la conversación actual
     mensajes = conversacion_actual.mensajes.all()
@@ -34,10 +49,14 @@ def chatbot(request, conversacion_id=None):
     # Listar todas las conversaciones para el sidebar
     conversaciones = Conversacion.objects.all()[:20]
     
+    # ✅ OBTENER INSIGHTS NO VISTOS
+    insights_pendientes = obtener_insights_no_vistos()[:5]  # Máximo 5
+    
     return render(request, 'chatbot.html', {
         'conversacion_actual': conversacion_actual,
         'mensajes': mensajes,
-        'conversaciones': conversaciones
+        'conversaciones': conversaciones,
+        'insights_pendientes': insights_pendientes,  # ✅ NUEVO
     })
 
 
@@ -74,21 +93,16 @@ def chatbot_api(request):
     if es_primer_mensaje:
         conversacion.generar_titulo_automatico()
 
-    # ✅ OBTENER HISTORIAL DE LA CONVERSACIÓN (últimos 10 mensajes)
+    # OBTENER HISTORIAL DE LA CONVERSACIÓN (últimos 10 mensajes)
     mensajes_previos = conversacion.mensajes.order_by('-fecha')[:10]
     historial = []
     
-    for msg in reversed(mensajes_previos):  # Revertir para orden cronológico
+    for msg in reversed(mensajes_previos):
         historial.append({
             "role": "user" if msg.tipo == "user" else "assistant",
             "content": msg.mensaje
         })
 
-    # DISTINGUIR ENTRE REGISTRO vs CONSULTA/ANÁLISIS
-    from .services.intelligent_business_assistant import asistente_negocio
-    from .services.openai_service import interpretar_mensaje
-    from .services.negocio_service import ejecutar_accion
-    
     # Palabras clave de ESCRITURA (modificar datos)
     keywords_escritura = [
         'registrar', 'registra', 'vendí', 'vender', 'vende',
@@ -102,19 +116,29 @@ def chatbot_api(request):
         data = interpretar_mensaje(mensaje)
         respuesta = ejecutar_accion(data)
     else:
-        # ✅ PASAR HISTORIAL al sistema inteligente
+        # Sistema inteligente
         respuesta = asistente_negocio(mensaje, historial=historial)
+        
+    
+    # ✅ FORMATEAR LA RESPUESTA (convertir markdown a HTML)
+    respuesta_formateada = formatear_respuesta_chatbot(respuesta)
+
+    # ✅ EXTRAER Y GUARDAR CONOCIMIENTO DESPUÉS DE RESPONDER
+    resultado_memoria = procesar_y_guardar_conocimiento(mensaje, respuesta)
+    
+    if resultado_memoria['conocimiento_guardado']:
+        print(f"💾 Conocimiento guardado: {resultado_memoria['items']}")
 
     # Guardar respuesta del bot
     MensajeChat.objects.create(
         conversacion=conversacion,
         tipo='bot',
-        mensaje=respuesta
+        mensaje=respuesta_formateada
     )
     
     conversacion.save()
 
-    response_data = {"respuesta": respuesta}
+    response_data = {"respuesta": respuesta_formateada}
     
     if es_primer_mensaje:
         response_data["nuevo_titulo"] = conversacion.titulo
@@ -178,3 +202,19 @@ def obtener_mensajes_conversacion(request, conversacion_id):
         'titulo': conversacion.titulo,
         'mensajes': mensajes_data
     })
+    
+    
+@require_POST
+def descartar_insight(request, insight_id):
+    """Marca un insight como visto"""
+    insight = get_object_or_404(InsightNegocio, id=insight_id)
+    insight.visto = True
+    insight.save()
+    return JsonResponse({'success': True})
+
+
+@require_POST
+def descartar_todos_insights(request):
+    """Marca todos los insights como vistos"""
+    InsightNegocio.objects.filter(visto=False).update(visto=True)
+    return JsonResponse({'success': True})

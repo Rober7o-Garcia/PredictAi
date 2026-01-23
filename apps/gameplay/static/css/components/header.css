@@ -104,6 +104,24 @@
     flex-shrink: 0;
 }
 
+
+/* ====================================
+   HEADER ACTIONS (para el badge)
+==================================== */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.chatbot-header-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    margin-left: 10px;
+}
+
 .chatbot-close:hover {
     background: rgba(255, 255, 255, 0.2);
     color: white;

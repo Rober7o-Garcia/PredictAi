@@ -5,10 +5,31 @@
     width: 100%;
 }
 
+/* ====================================
+   LAYOUT PRINCIPAL - FIX
+==================================== */
+
 .chat-fullscreen {
     flex: 1;
     display: flex;
     flex-direction: column;
     background: white;
-    overflow: hidden;
+    overflow: hidden; /* ✅ IMPORTANTE: Evitar overflow */
+}
+
+.chatbot-messages {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden; /* ✅ NO scroll horizontal aquí */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Asegurar que el contenedor de chat no se expanda */
+.chat-container {
+    display: flex;
+    height: 100vh;
+    max-width: 100vw; /* ✅ No exceder viewport */
+    overflow: hidden; /* ✅ Control de overflow */
 }

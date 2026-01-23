@@ -4,12 +4,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Asistente Virtual - MiNegocio Smart</title>
+    <title>Asistente Virtual - PredictaAI</title>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💬</text></svg>">
     <link rel="stylesheet" href="{% static 'css/chatbot.css' %}">
 </head>
 <body>
-    <!-- ✅ CSRF TOKEN PARA ELIMINAR CONVERSACIONES -->
     {% csrf_token %}
     
     <div class="chat-container">
@@ -25,9 +36,9 @@
             <div class="conversaciones-list">
                 {% for conv in conversaciones %}
                 <a href="#" 
-                data-conversacion-id="{{ conv.id }}"
-                onclick="event.preventDefault(); NavigationManager.loadConversation({{ conv.id }}); return false;"
-                class="conversacion-item {% if conv.id == conversacion_actual.id %}active{% endif %}">
+                   data-conversacion-id="{{ conv.id }}"
+                   onclick="event.preventDefault(); NavigationManager.loadConversation({{ conv.id }}); return false;"
+                   class="conversacion-item {% if conv.id == conversacion_actual.id %}active{% endif %}">
                     <div class="conv-titulo">{{ conv.titulo }}</div>
                     <div class="conv-fecha">{{ conv.fecha_actualizacion|date:"d/m/Y H:i" }}</div>
                     <button class="btn-delete" onclick="eliminarConversacion(event, {{ conv.id }})">🗑️</button>
@@ -40,19 +51,19 @@
 
         <!-- 💬 CHAT PRINCIPAL -->
         <div class="chat-fullscreen">
+            <!-- ✅ HEADER UNIFICADO CON BADGE DE INSIGHTS -->
             <div class="chatbot-header">
-            <!-- ✅ BOTÓN TOGGLE SIDEBAR CON DOS ÍCONOS -->
-            <button class="sidebar-toggle-btn" onclick="toggleSidebar()" title="Mostrar/Ocultar conversaciones">
-                <!-- Ícono de menú hamburguesa (mostrar sidebar cuando está oculto) -->
-                <svg id="menuIcon" class="toggle-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
-                </svg>
-                <!-- Ícono de X (cerrar sidebar cuando está visible) -->
-                <svg id="closeIcon" class="toggle-icon hidden" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-                </svg>
-            </button>
+                <!-- Botón toggle sidebar -->
+                <button class="sidebar-toggle-btn" onclick="toggleSidebar()" title="Mostrar/Ocultar conversaciones">
+                    <svg id="menuIcon" class="toggle-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                    <svg id="closeIcon" class="toggle-icon hidden" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                    </svg>
+                </button>
 
+                <!-- Info del chatbot -->
                 <div class="chatbot-header-info">
                     <div class="chatbot-avatar">AI</div>
                     <div>
@@ -63,9 +74,75 @@
                         </div>
                     </div>
                 </div>
-                <a href="{% url 'companies:dashboard' %}" class="chatbot-close" title="Volver al dashboard">←</a>
+
+                <!-- ✅ BADGE DE INSIGHTS (nuevo) -->
+                <div class="header-actions">
+                    {% if insights_pendientes %}
+                    <button id="insightsButton" class="insights-badge-btn" onclick="abrirModalInsights()" title="Ver insights detectados">
+                        <span class="badge-icon">🔔</span>
+                        <span class="badge-count">{{ insights_pendientes.count }}</span>
+                    </button>
+                    {% endif %}
+                    
+                    <!-- Botón volver al dashboard -->
+                    <a href="{% url 'companies:dashboard' %}" class="chatbot-close" title="Volver al dashboard">←</a>
+                </div>
             </div>
 
+            <!-- ✅ MODAL DE INSIGHTS -->
+            {% if insights_pendientes %}
+            <div id="insightsModal" class="insights-modal" onclick="cerrarModalInsights(event)">
+                <div class="insights-modal-content" onclick="event.stopPropagation()">
+                    <div class="insights-modal-header">
+                        <h3>🔔 Insights Detectados</h3>
+                        <button class="close-modal-btn" onclick="cerrarModalInsights()">✕</button>
+                    </div>
+                    
+                    <div class="insights-modal-body">
+                        {% for insight in insights_pendientes %}
+                        <div class="insight-card insight-{{ insight.severidad }}" data-insight-id="{{ insight.id }}">
+                            <div class="insight-header">
+                                <span class="insight-icon">
+                                    {% if insight.severidad == 'critica' %}🚨
+                                    {% elif insight.severidad == 'alta' %}⚠️
+                                    {% elif insight.tipo == 'oportunidad' %}💡
+                                    {% elif insight.tipo == 'correlacion' %}🔗
+                                    {% else %}📊{% endif %}
+                                </span>
+                                <h4>{{ insight.titulo }}</h4>
+                            </div>
+                            
+                            <p class="insight-description">{{ insight.descripcion }}</p>
+                            
+                            {% if insight.recomendacion %}
+                            <div class="insight-recommendation">
+                                <strong>💡 Recomendación:</strong> {{ insight.recomendacion }}
+                            </div>
+                            {% endif %}
+                            
+                            <div class="insight-footer">
+                                <span class="insight-time">{{ insight.detectado_en|timesince }} atrás</span>
+                                <button class="insight-dismiss-btn" onclick="descartarInsight({{ insight.id }})">
+                                    Marcar como visto
+                                </button>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="insights-modal-footer">
+                        <button class="btn-secondary" onclick="descartarTodosInsights()">
+                            Marcar todos como vistos
+                        </button>
+                        <button class="btn-primary" onclick="cerrarModalInsights()">
+                            Cerrar
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- 💬 ÁREA DE MENSAJES -->
             <div class="chatbot-messages" id="chatbotMessages">
                 {% if mensajes %}
                     {% for msg in mensajes %}
@@ -105,7 +182,6 @@
                     autocomplete="off"
                 >
 
-                <!-- 🎤 BOTÓN MICRÓFONO -->
                 <button class="chatbot-mic-btn" id="chatbotMic" type="button">
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
@@ -113,7 +189,6 @@
                     </svg>
                 </button>
 
-                <!-- 📤 BOTÓN ENVIAR -->
                 <button class="chatbot-send-btn" id="chatbotSend">
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
@@ -122,6 +197,7 @@
             </div>
         </div>
     </div>
+
     <!-- ✅ MODAL DE CONFIRMACIÓN -->
     <div id="confirmModal" class="modal-overlay">
         <div class="modal-content">
@@ -143,7 +219,6 @@
 
     <!-- ✅ CONTENEDOR DE NOTIFICACIONES -->
     <div class="notification-container" id="notificationContainer"></div>
-
 
     <script>
         window.CONVERSACION_ID = {{ conversacion_actual.id }};
