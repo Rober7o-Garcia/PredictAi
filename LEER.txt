@@ -1,0 +1,7 @@
+Pa que no les de error de smtp, creense en el .env esto: 
+# Configuración de Email
+EMAIL_HOST_USER=****
+EMAIL_HOST_PASSWORD=*****
+DEFAULT_FROM_EMAIL=*****
+
+¿De dónde saco eso de la clave? Sencillo, inicien sesión en cualquiera de sus correos y créense una contraseña de aplicación y esa contraseña es la que estará en EMAIL_HOST_PASSWORD
