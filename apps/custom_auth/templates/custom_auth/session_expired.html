@@ -1,18 +1,26 @@
 {% extends "base/base.html" %}
 {% load static %}
 
-{% block pag_descrip %} Session xpired {% endblock pag_descrip %}
-{% block title_pag %} Session expired | EconoSimAI 💻 {% endblock title_pag %}
+{% block pag_descrip %} Session Expired {% endblock pag_descrip %}
+{% block title_pag %} Session expired | PredictAI 💻 {% endblock title_pag %}
 {% block favicon %}
     https://cdn-icons-png.freepik.com/256/6227/6227474.png
 {% endblock favicon %}
 
 {% block content %}
-    <body class="background-auth min-h-screen flex justify-center items-center">
-        <section class="bg-white rounded-lg w-115 max-md:w-3/4_w h-auto px-5 py-6 flex flex-col justify-center items-center gap-5">
-            <h2>Sesión expirada</h2>
-            <p>Tu sesión ha caducado, por favor vuelve a iniciar sesión</p>
-            <a class="btn-primary" href="{% static "custom_auth:login" %}">Login</a>
-        </section>
+    <body class="min-h-screen flex items-center justify-center bg-neutral-600">
+        <div class="relative w-full max-w-md rounded-2xl bg-neutral-900 border border-neutral-700 shadow-2xl overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-r from-fuchsia-600/20 via-cyan-500/20 to-emerald-500/20 blur-2xl"></div>
+
+            <div class="relative z-10 p-8 flex flex-col gap-5 text-center">
+                <span class="text-sm uppercase tracking-widest text-emerald-400 font-semibold">PredictAI</span>
+                <h2 class="text-3xl font-extrabold tracking-tight text-white">Tu inicio de sesión ha expirado ⚠️</h2>
+                <p class="text-neutral-300">Vuelve a iniciar sesión</p>
+
+                <a href="{% url "custom_auth:login" %}" class="mt-4 inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-emerald-500 to-cyan-500 px-6 py-3 font-bold text-black hover:scale-105 hover:shadow-lg transition-all duration-300">
+                    Login 💻
+                </a>
+            </div>
+        </div>
     </body>
 {% endblock content %}

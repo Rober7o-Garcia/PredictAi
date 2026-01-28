@@ -4,6 +4,7 @@ from django.core.exceptions import ValidationError
 from apps.custom_auth.validators.password import validar_password
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
+from apps.custom_auth.validators.fecha import validar_edad
 
 User = get_user_model()
 
@@ -14,10 +15,10 @@ class SignUpForm(UserCreationForm):
         validators=[validar_password],
         widget=forms.PasswordInput(
             attrs={
-                "placeholder": "password",
+                "placeholder": "Password...",
                 "minlength": "8",
                 "maxlength": "128",
-                "class": "bg-gray-200 px-3 py-2 outline-0 w-72 max-md:w-[70vw]"
+                "class": "w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
             }
         )
     )
@@ -27,10 +28,10 @@ class SignUpForm(UserCreationForm):
         required=True,
         widget=forms.PasswordInput(
             attrs={
-                "placeholder": "confirm password",
+                "placeholder": "Confirmation password...",
                 "minlength": "8",
                 "maxlength": "128",
-                "class": "bg-gray-200 px-3 py-2 outline-0 w-72 max-md:w-[70vw]"
+                "class": "w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
             }
         )
     )
@@ -39,10 +40,10 @@ class SignUpForm(UserCreationForm):
         required=True, 
         widget=forms.TextInput(
             attrs={
-                "placeholder": "first_name",
+                "placeholder": "First name...",
                 "minlength": "3",
                 "maxlength": "30",
-                "class": "bg-gray-200 px-3 py-2 outline-0 w-72 max-md:w-[70vw]"
+                "class": "w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
             }
         )
     )
@@ -51,10 +52,21 @@ class SignUpForm(UserCreationForm):
         required=True, 
         widget=forms.TextInput(
             attrs={
-                "placeholder": "last_name",
+                "placeholder": "Last name...",
                 "minlength": "3",
                 "maxlength": "30",
-                "class": "bg-gray-200 px-3 py-2 outline-0 w-72 max-md:w-[70vw]"
+                "class": "w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+            }
+        )
+    )
+
+    birth_date = forms.DateField(
+        required=True,
+        validators=[validar_edad],
+        widget=forms.DateInput(
+            attrs={
+                "type": "date",
+                "class": "w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
             }
         )
     )
@@ -63,10 +75,10 @@ class SignUpForm(UserCreationForm):
         required=True, 
         widget=forms.TextInput(
             attrs={
-                "placeholder": "username",
+                "placeholder": "Username...",
                 "minlength": "6",
                 "maxlength": "20",
-                "class": "bg-gray-200 px-3 py-2 outline-0 w-72 max-md:w-[70vw]"
+                "class": "w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
             }
         )
     )
@@ -75,17 +87,17 @@ class SignUpForm(UserCreationForm):
         required=True, 
         widget=forms.EmailInput(
             attrs={
-                "placeholder": "email",
+                "placeholder": "Email...",
                 "minlength": "6",
                 "maxlength": "254",
-                "class": "bg-gray-200 px-3 py-2 outline-0 w-72 max-md:w-[70vw]"
+                "class": "w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
             }
         )
     )
     
     class Meta: 
         model = User
-        fields = ["first_name", "last_name", "username", "email"]
+        fields = ["first_name", "last_name", "birth_date", "username", "email"]
         
     def clean(self): 
         cleaned_data = super().clean()
@@ -130,9 +142,8 @@ class SignUpForm(UserCreationForm):
     
         return email
     
-    def save(self, commit=True):
-        user = super().save(commit=False)
-        user.is_active = True   # 🔴 clave
-        if commit:
-            user.save()
-        return user
+    def clean_birth_date(self):
+        birth_date = self.cleaned_data["birth_date"]
+        validar_edad(birth_date)
+
+        return birth_date

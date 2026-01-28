@@ -4,6 +4,7 @@ from apps.custom_auth.validators.email import validar_email
 from apps.custom_auth.validators.name import validar_nombre
 from apps.custom_auth.validators.username import validar_username
 from apps.custom_auth.validators.password import validar_password
+from apps.custom_auth.validators.fecha import validar_edad
 from django.contrib.auth.password_validation import validate_password
 
 class CustomUserManager(BaseUserManager): 
@@ -38,6 +39,7 @@ class CustomUserManager(BaseUserManager):
 class CustomUser(AbstractBaseUser, PermissionsMixin): 
     first_name = models.CharField(max_length=30, validators=[validar_nombre])
     last_name = models.CharField(max_length=30, validators=[validar_nombre])
+    birth_date = models.DateField(validators=[validar_edad])
     username = models.CharField(max_length=20, validators=[validar_username], unique=True)
     email = models.EmailField(max_length=254, validators=[validar_email], unique=True)
     password = models.CharField(max_length=128)      # Lo guarda 

@@ -1,0 +1,193 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block favicon %}
+    https://cdn4.iconfinder.com/data/icons/seo-and-web-2/151/90-1024.png
+{% endblock favicon %}
+
+{% block title_pag %}PredictAI - Dashboard 💻{% endblock title_pag %}
+
+{% block css_styles %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .chatbot-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: all 0.3s ease;
+        }
+
+        .chatbot-button:hover {
+            transform: scale(1.1);
+        }
+
+        .chatbot-button svg {
+            width: 28px;
+            height: 28px;
+            fill: white;
+        }
+    </style>
+    <link rel="stylesheet" href="{% static 'companies/css/dashboard.css' %}">
+{% endblock css_styles %}
+
+{% block content %}
+    <body>
+        <!-- NAVBAR -->
+        <nav class="navbar">
+            <div class="container-fluid px-4">
+                <span class="navbar-brand">PredictAI</span>
+                <span class="text-white-50 d-none d-md-inline">Dashboard Inteligente</span>
+            </div>
+        </nav>
+
+        <div class="container-fluid px-3 px-md-4 py-4">
+            <!-- ============================================ -->
+            <!-- KPIs PRINCIPALES (4 tarjetas superiores)     -->
+            <!-- ============================================ -->
+            <div class="row mb-4 fade-in-sequence">
+                <!-- Liquidez -->
+                <div class="col-12 col-sm-6 col-lg-3 mb-3 mb-lg-0">
+                    <div class="metric-card">
+                        <div class="metric-label">Liquidez del Mes</div>
+                        <div class="metric-value liquidez-mes">${{ liquidez|floatformat:2 }}</div>
+                        <div class="metric-subtitle">Ingresos - Egresos</div>
+                    </div>
+                </div>
+
+                <!-- Margen Neto -->
+                <div class="col-12 col-sm-6 col-lg-3 mb-3 mb-lg-0">
+                    <div class="metric-card">
+                        <div class="metric-label">Margen de Utilidad</div>
+                        <div class="metric-value margen-neto text-success">{{ margen_neto_porcentaje|floatformat:1 }}%</div>
+                        <div class="metric-subtitle">Rentabilidad neta</div>
+                    </div>
+                </div>
+
+                <!-- Ticket Promedio -->
+                <div class="col-12 col-sm-6 col-lg-3 mb-3 mb-lg-0">
+                    <div class="metric-card">
+                        <div class="metric-label">Ticket Promedio</div>
+                        <div class="metric-value ticket-promedio">${{ ticket_promedio|floatformat:2 }}</div>
+                        <div class="metric-subtitle">Por transacción</div>
+                    </div>
+                </div>
+
+                <!-- Ventas del Mes -->
+                <div class="col-12 col-sm-6 col-lg-3 mb-3 mb-lg-0">
+                    <div class="metric-card">
+                        <div class="metric-label">Ventas del Mes</div>
+                        <div class="metric-value ventas-mes">${{ ventas_mes|floatformat:2 }}</div>
+                        <div class="metric-subtitle">Total facturado</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- GRÁFICOS CENTRALES (Tendencias)              -->
+            <!-- ============================================ -->
+            <div class="row mb-4 charts-row-1">
+                <!-- Gráfico: Ventas Mensuales (Líneas) -->
+                <div class="col-12 col-lg-6 mb-4 mb-lg-0">
+                    <div class="chart-container">
+                        <h5> Ventas Últimos 6 Meses</h5>
+                        <canvas id="ventasMensualesChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Gráfico: Ventas por Producto (Barras) -->
+                <div class="col-12 col-lg-6">
+                    <div class="chart-container">
+                        <h5> Top 10 Productos Más Vendidos</h5>
+                        <canvas id="productosChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- GRÁFICOS INFERIORES (Detalles)               -->
+            <!-- ============================================ -->
+            <div class="row mb-4">
+                <!-- Gráfico: Ventas por Categoría (Circular) -->
+                <div class="col-12 col-lg-6 mb-4 mb-lg-0">
+                    <div class="chart-container">
+                        <h5> Ventas por Categoría</h5>
+                        <canvas id="categoriasChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Gráfico: Flujo de Caja (Área) -->
+                <div class="col-12 col-lg-6">
+                    <div class="chart-container">
+                        <h5> Flujo de Caja Mensual</h5>
+                        <canvas id="flujoCajaChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- TABLA: Productos a Reponer                   -->
+            <!-- ============================================ -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="table-container">
+                        <h5> Productos que Necesitan Reposición ({{ productos_reponer_count }})</h5>
+                        {% if productos_reponer %}
+                        <table class="table reponer-table">
+                            <thead>
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Categoría</th>
+                                    <th class="text-end">Stock Actual</th>
+                                    <th class="text-end">Stock Mínimo</th>
+                                    <th class="text-end">Proveedor</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for prod in productos_reponer %}
+                                <tr>
+                                    <td><strong>{{ prod.nombre }}</strong></td>
+                                    <td>{{ prod.categoria.nombre }}</td>
+                                    <td class="text-end">
+                                        <span class="badge-alert">{{ prod.stock_actual }}</span>
+                                    </td>
+                                    <td class="text-end">{{ prod.stock_minimo }}</td>
+                                    <td class="text-end">{{ prod.proveedor.nombre|default:"Sin proveedor" }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        {% else %}
+                        <div class="empty-state">
+                            <p> Todo el inventario está en orden</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BOTÓN FLOTANTE CHATBOT -->
+        <a href="{% url 'chatbot:chatbot' %}" class="chatbot-button" style="text-decoration: none;">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/>
+            </svg>
+        </a>
+
+        {% block js_scripts %}
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+            <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
+            <script type="module" src="{% static 'companies/js/dashboard.js' %}"></script>
+        {% endblock js_scripts %}
+    </body>
+{% endblock content %}

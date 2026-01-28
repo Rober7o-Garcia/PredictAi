@@ -13,10 +13,10 @@ class LoginForm(forms.Form):
         required=True,
         widget=forms.EmailInput(
             attrs={
-                "placeholder": "email",
+                "placeholder": "Email...",
                 "minlength": "6",
-                "maxlength": "254", 
-                "class": "bg-gray-200 px-3 py-2 outline-0 w-80 max-md:w-[60vw]"
+                "maxlength": "254",
+                "class": "w-full px-4 py-3 sm:px-8 sm:py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-blue-400 focus:bg-white"
             }
         )
     )
@@ -26,10 +26,10 @@ class LoginForm(forms.Form):
         max_length=128,
         widget=forms.PasswordInput(
             attrs={
-                "placeholder": "password",
+                "placeholder": "Password...",
                 "minlength": "8",
                 "maxlength": "128",
-                "class": "bg-gray-200 px-3 py-2 outline-0 w-80 max-md:w-[60vw]"
+                "class": "w-full px-4 py-3 sm:px-8 sm:py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-blue-400 focus:bg-white"
             }
         )
     )

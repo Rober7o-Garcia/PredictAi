@@ -7,6 +7,9 @@
     /* Colores */
     --color-skyblue-v1: #4a9cff;
     --color-blue-v1: rgba(30, 41, 59, 0.7);
+    --color-body: #070c2a;
+    --color-primary: #8b5cf6;
+    --color-secondary: #00bbe4;
 
     /* Fuentes */
     --font-playpen-sans: "Playpen Sans";
@@ -15,6 +18,8 @@
     --font-roboto-mono: "Roboto Mono";
     --font-ubuntu: "Ubuntu";
     --font-raleway: "Raleway";
+    --font-heading: "Clash Display", sans-serif;
+    --font-body: "Inter", sans-serif;
 
     /* Anchos / alturas */
     --spacing-102: 320px;

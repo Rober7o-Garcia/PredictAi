@@ -3,11 +3,13 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 import json
 import logging
+from django.contrib.auth.decorators import login_required
 from .services.dashboard_service import DashboardService
 
 logger = logging.getLogger(__name__)
 
 
+@login_required
 @require_http_methods(["GET"])
 def dashboard(request):
     """
@@ -34,7 +36,7 @@ def dashboard(request):
             'datos_semana': json.dumps(data.get('datos_semana', [])),
         }
         
-        return render(request, 'dashboard.html', context)
+        return render(request, 'companies/dashboard.html', context)
         
     except Exception as e:
         logger.error(f"Error al cargar dashboard: {e}")
@@ -52,10 +54,8 @@ def dashboard(request):
             'datos_semana': json.dumps([]),
             'error': 'Error al cargar los datos del dashboard'
         }
-        return render(request, 'dashboard.html', context)
+        return render(request, 'companies/dashboard.html', context)
     
-
-
 @require_http_methods(["GET"])
 def dashboard_data(request):
     """

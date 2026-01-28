@@ -1,0 +1,90 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block title_pag %}Activa tu cuenta — PredictAI{% endblock title_pag %}
+
+{% block content %}
+<body style="min-height:100vh; background-color:#f9fafb; display:flex; align-items:center; justify-content:center; padding:2rem 1rem;">
+    <div style="width:100%; max-width:42rem; background-color:#ffffff; border-radius:0.75rem; box-shadow:0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1); overflow:hidden;">
+        
+        <div style="padding: 3rem 3rem;">
+            <div style="text-align:center; margin-bottom:1.5rem;">
+                <img 
+                    src="https://{{ domain }}{% static 'custom_auth/assets/logo.png' %}" 
+                    alt="PredictAI" 
+                    style="margin-left:auto; margin-right:auto; height:5rem;"
+                />
+                <h2 style="margin-top:1rem; font-size:1.5rem; font-weight:700; color:#0f172a;">
+                    Activa tu cuenta en PredictAI
+                </h2>
+            </div>
+
+            <div style="max-width:36rem; margin-left:auto; margin-right:auto; color:#334155; font-size:0.875rem; line-height:1.6;">
+                <p>
+                    Hola <strong>{{ user.first_name|default:user.username }}</strong>,
+                </p>
+
+                <p>
+                    Gracias por registrarte en <strong>PredictAI</strong>. Para completar el registro debes activar tu cuenta haciendo clic en el botón de abajo. Este enlace es seguro y expira pasado un tiempo.
+                </p>
+
+                <div style="text-align:center; margin:1.5rem 0;">
+                    <a 
+                        href="{{ activation_link }}" 
+                        style="
+                            display:inline-block;
+                            background-color:#0ea5e9;
+                            color:#ffffff;
+                            font-weight:600;
+                            padding:0.75rem 1.5rem;
+                            border-radius:0.5rem;
+                            text-decoration:none;
+                            box-shadow:0 10px 15px -3px rgba(0,0,0,0.1);
+                        "
+                    >
+                        Activar mi cuenta
+                    </a>
+                </div>
+
+                <p style="font-size:0.75rem; color:#64748b;">
+                    Si el botón no funciona, copia y pega el siguiente enlace en tu navegador:
+                </p>
+
+                <div style="
+                    margin-top:0.75rem;
+                    background-color:#f9fafb;
+                    border:1px solid #f1f5f9;
+                    padding:0.75rem;
+                    border-radius:0.375rem;
+                    font-size:0.75rem;
+                    word-break:break-word;
+                    color:#0f172a;
+                ">
+                    {{ activation_link }}
+                </div>
+
+                <p style="margin-top:1rem; font-size:0.75rem; color:#64748b;">
+                    Si no solicitaste este correo, puedes ignorarlo.
+                </p>
+            </div>
+        </div>
+
+        <div style="
+            background-color:#f9fafb;
+            border-top:1px solid #f1f5f9;
+            padding:1rem 1.5rem;
+            text-align:center;
+            font-size:0.875rem;
+            color:#475569;
+        ">
+            ¿Necesitas ayuda? Contáctanos en 
+            <a 
+                href="mailto:soporte@{{ domain }}" 
+                style="color:#0ea5e9; text-decoration:none;"
+            >
+                soporte@{{ domain }}
+            </a>
+        </div>
+    </div>
+</body>
+{% endblock content %}

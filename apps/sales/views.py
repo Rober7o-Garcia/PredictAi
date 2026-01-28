@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 
 def punto_venta(request):
     """Vista principal del punto de venta"""
-    return render(request, 'punto_venta.html')
+    return render(request, 'sales/punto_venta.html')
 
 @require_http_methods(["GET"])
 def buscar_producto_por_codigo(request, codigo):

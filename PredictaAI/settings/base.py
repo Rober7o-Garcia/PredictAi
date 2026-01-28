@@ -16,16 +16,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_browser_reload',
     'apps.core.apps.CoreConfig',
     'apps.custom_auth.apps.CustomAuthConfig',
     'apps.companies.apps.CompaniesConfig',
-    'apps.gameplay.apps.GameplayConfig',
-    'apps.market_ai.apps.MarketAiConfig',
-    'apps.reports.apps.ReportsConfig',
-    'apps.simulation.apps.SimulationConfig',
+    'apps.chatbot.apps.ChatbotConfig',
+    'apps.sales.apps.SalesConfig',
     'rest_framework',
-    'apps.sales',
+    "django_browser_reload",
 ]
 
 MIDDLEWARE = [
@@ -36,6 +33,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django_browser_reload.middleware.BrowserReloadMiddleware"
 ]
 
 ROOT_URLCONF = 'PredictaAI.urls'
@@ -87,4 +85,12 @@ USE_I18N = True
 USE_TZ = True
 
 OPENAI_API_KEY = config("OPENAI_API_KEY")
-LOGIN_URL = '/custom_auth/login/'
+LOGIN_URL = 'custom_auth:login'
+
+# Configuración servicio SMTP, consultar con William sobre el tema
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_HOST_USER = config("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL")
